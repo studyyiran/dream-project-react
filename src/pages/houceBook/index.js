@@ -1,11 +1,13 @@
-import React from 'react'
-import ReactVersion from './react'
+import React, { useState } from "react";
+import ReactVersion from "./react";
 
 function HouceBook() {
+  const [type, setType] = useState("reactVersion");
   switch (type) {
-    case 'reactVersion':
-      return <ReactVersion />
+    case "reactVersion":
+      return <ReactVersion />;
   }
+  return null
 }
 
-export default 
+export default HouceBook;
