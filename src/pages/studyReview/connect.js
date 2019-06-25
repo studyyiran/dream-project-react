@@ -1,11 +1,13 @@
 import studyReviewActions from "./actions";
 import connect from "react-redux/es/connect/connect";
+import studyReviewReducers from "../../reducers/studyReview";
 
 export default function Connect(Page) {
   const mapState = state => {
-    const { reviewList } = state;
+    console.log(state)
+    const { studyReviewReducers } = state;
     return {
-      reviewList
+      ...studyReviewReducers
     };
   };
   const mapDispatch = studyReviewActions;
