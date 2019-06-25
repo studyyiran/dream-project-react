@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
+import Router from "./router";
 import ReduxWrapper from "./reduxWrapper";
 
 ReactDOM.render(
   <ReduxWrapper>
-    <App />
+    <Router />
   </ReduxWrapper>,
   document.getElementById("root")
 );
