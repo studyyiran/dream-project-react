@@ -1,10 +1,8 @@
 import React from "react";
-import DailyMission from "./pages/dailyMission";
-import HouceBook from "./pages/houceBook";
+import Router from "./router";
 
 function App() {
-  return <HouceBook />;
-  // return <DailyMission />;
+  return <Router />;
 }
 
 export default App;

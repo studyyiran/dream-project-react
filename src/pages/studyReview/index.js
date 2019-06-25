@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import ajax from "../../util/ajax";
-import dailyMissionServer from "./server";
+import sudtyReviewServer from "./server";
 
 export default function() {
+  return <div>123</div>
   useEffect(() => {
-    dailyMissionServer.getReviewList().then(res => {
+    sudtyReviewServer.getReviewList().then(res => {
       console.log(res);
     });
   }, []);
