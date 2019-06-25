@@ -1,3 +1,22 @@
 .review-list {
+  .item {
+    table,table tr th, table tr td {
+      border:1px solid #0094ff;
+    }
+    tr {
+
+    }
+
+    tr[data-status='start']{
+      border: 10px solid red;
+      background: red;
+    }
+    tr[data-status='finish']{
+      background: greenyellow;
+    }
+  }
 
 }
+
+
+
