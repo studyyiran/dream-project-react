@@ -1,0 +1,19 @@
+import server from "../server";
+
+const actions = {
+  setList: value => ({
+    type: "setList",
+    value
+  }),
+  getReviewList: () => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      server.getStudyTodoList().then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setList(res));
+      });
+    };
+  }
+};
+
+export default actions;

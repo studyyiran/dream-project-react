@@ -4,9 +4,11 @@ import thunk from "redux-thunk";
 import createLogger from "redux-logger";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import studyReviewReducers from "./reducers/studyReview";
+import studyTodoListReducers from "./reducers/studyTodoList";
 
 const rootReducer = combineReducers({
-  studyReviewReducers
+  studyReviewReducers,
+  studyTodoListReducers
 });
 
 const middleware = [thunk];
