@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
+import './index.scss'
 import Timer from "../../../../util/timer";
 import moment from "moment";
 import Modal from "../../../../components/modal";
@@ -6,7 +7,7 @@ import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
 export default function ReviewItem(props) {
   const { info, updateReviewStatus } = props;
-
+  const refTimer = useRef()
   const {
     _id,
     reviewContent,
@@ -14,23 +15,28 @@ export default function ReviewItem(props) {
     needReviewCount,
     haveReviewCount,
     startReviewTime,
+    continueSecond,
     createTime,
     status
   } = info;
   const [timer, setTimer] = useState(0)
   useEffect(() => {
     if (status === 'start') {
-      const time = Number(Date.now) - Number(startReviewTime)
+      const time = Number(continueSecond) + Number(Date.now()) - Number(startReviewTime)
       const info = {
-        time: time,
+        minInterval: -1000,
+        time,
         runCallBack: times => {
-          console.log(times)
+          setTimer(times)
         },
         finishCallBack: () => {
-
+          setTimer([])
         }
       };
-      new Timer(info).start()
+      refTimer.current = new Timer(info)
+      refTimer.current.start()
+    } else {
+      refTimer && refTimer.current && refTimer.current.stop && refTimer.current.stop()
     }
   }, [status])
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
@@ -59,6 +65,20 @@ export default function ReviewItem(props) {
       });
     }
   }
+  function renderTimer() {
+    if (isStart) {
+      const arr = ['天','时','分','秒'];
+      let timeString = '';
+      (timer || []).map((item, index) => {
+        if (item) {
+          timeString = timeString + (`${item}${arr[index]}`)
+        }
+      })
+      return timeString
+    } else {
+      return null
+    }
+  }
   return (
     <CloseAndSureContainer
       buttonContent={"submit"}
@@ -70,7 +90,7 @@ export default function ReviewItem(props) {
       <div data-status={status} className="item" onClick={startReviewHandler}>
         <span>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</span>
         <p>{reviewContent}</p>
-        <span>{}</span>
+        <span>{renderTimer()}</span>
       </div>
     </CloseAndSureContainer>
   );

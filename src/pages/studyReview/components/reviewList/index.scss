@@ -11,20 +11,6 @@
     .item[data-status='finish']{
       background: greenyellow;
     }
-    .item {
-      display: flex;
-      align-items: stretch;
-      border: 1px solid blue;
-      padding: 10px;
-      margin: 2px;
-      > span {
-        flex: 0 0 140px;
-        border-right: 1px solid blue;
-      }
-      > p {
-        flex: 1;
-      }
-    }
   }
 }
 

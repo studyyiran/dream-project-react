@@ -10,7 +10,7 @@ function index({time, runCallBack, finishCallBack, minInterval}) {
 index.prototype.start = function () {
   this.timeIntervalId = window.setInterval(() => {
     this.perSecondCall()
-  }, this.minInterval)
+  }, Math.abs(this.minInterval))
 }
 
 index.prototype.stop = function () {
@@ -35,13 +35,13 @@ index.prototype.format = function (second) {
     24 * 60 * 60 * 1000,
     60 * 60 * 1000,
     60 * 1000,
-    1000,
   ]
   if (this.minInterval) {
     timer.push(this.minInterval)
   }
   let lastTime = second
   let arr = timer.map((unit) => {
+    unit = Math.abs(unit)
     let result = Math.floor(lastTime / unit)
     lastTime = lastTime - result * unit
     if (result > 9) {
