@@ -37,19 +37,19 @@ ajax.fetch = function(config) {
   return new Promise((resolve, reject) => {
     fetch(url, otherConfig)
       .then(res => {
-        const result = res.json();
-        // result.then((res) => {
-        //   console.log(res)
-        //   resolve(res)
-        // })
-        // console.log(result)
-        if (true) {
+        console.log(res);
+        if (res.ok) {
+          const result = res.json();
           resolve(result);
         } else {
+          console.error("网络故障，500吗？");
+          console.error(res);
           reject(res);
         }
       })
       .catch(e => {
+        console.log(e);
+        console.error("网络故障，底层catch。network？404?");
         console.error(e);
       });
   });

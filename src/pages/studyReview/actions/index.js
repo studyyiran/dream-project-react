@@ -23,6 +23,19 @@ const actions = {
         dispatch(actions.setReviewList(res));
       });
     };
+  },
+  // is not good.why return promise make me know reducer result?
+  postNewReview: (data, callback) => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      const promise = studyReviewServer
+        .postNewReview({ reviewContent: data })
+        .then(res => {
+          dispatch({ type: "end ajax" });
+          dispatch(actions.setReviewList(res));
+        });
+      callback(promise);
+    };
   }
 };
 

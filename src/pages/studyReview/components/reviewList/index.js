@@ -12,7 +12,7 @@ export default function(props) {
 }
 
 function ButtonInputComponent(props) {
-  const { buttonContent } = props;
+  const { buttonContent, postNewReview } = props;
   const [isInput, setIsInput] = useState(false);
   const [inputValue, setInutValue] = useState("");
   const inputRef = useRef();
@@ -37,20 +37,33 @@ function ButtonInputComponent(props) {
       return !currentBool;
     });
   }
+
+  function postHandler() {
+    if (inputValue) {
+      postNewReview(inputValue, p => {
+        p.then(() => {
+          setInutValue("");
+          setIsInput(false);
+        }).catch(err => {
+          console.error("弹框！");
+          console.error(err);
+        });
+      });
+    } else {
+      console.error("empty");
+    }
+  }
   if (isInput) {
-    dom = (
-      <input
-        ref={inputRef}
-        onBlur={buttonHandler}
-        value={inputValue}
-        onChange={inputHandler}
-      />
-    );
+    dom = <input ref={inputRef} value={inputValue} onChange={inputHandler} />;
   } else {
     dom = <button onClick={buttonHandler}>{buttonContent}</button>;
   }
   return (
-    <ExtraSureTag buttonContent={"submit"} isShow={isInput}>
+    <ExtraSureTag
+      buttonContent={"submit"}
+      isShow={isInput}
+      buttonCallBack={postHandler}
+    >
       {dom}
     </ExtraSureTag>
   );
@@ -60,7 +73,7 @@ function ReviewListTable(props) {
   const { reviewList = [], ...other } = props;
   return (
     <>
-      <ButtonInputComponent buttonContent={"new study review"} />
+      <ButtonInputComponent {...props} buttonContent={"new study review"} />
       <div className="list">
         <table>
           <thead>

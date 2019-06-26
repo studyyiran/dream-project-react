@@ -13,13 +13,8 @@ const reviewServer = {
   },
   postNewReview: function postNewReview(data) {
     const url = localUrl + "/postReview";
-    // 不能为空
-    if (Object.keys(data).every(item => data[item])) {
-      return ajax.post(url, data).then(res => {
-        window.appRedux.dispatch({ type: "setReviewList", value: res });
-        return res;
-      });
-    } else {
+    if ((Object.keys(data) || []).every(item => data[item])) {
+      return ajax.post(url, data)
     }
   },
   fromReviewToStudyTodo: data => {
