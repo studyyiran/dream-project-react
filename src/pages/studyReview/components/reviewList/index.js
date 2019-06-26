@@ -3,6 +3,7 @@ import "./index.scss";
 import moment from "moment";
 import ButtonInputComponent from "../buttonInputComponent";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
+import Modal from "../../../../components/modal";
 
 export default function(props) {
   return (
@@ -64,7 +65,18 @@ function ReviewItem(props) {
     console.log("finishCallBack");
   }
   function stopCallBack() {
-    updateReviewStatus(_id, "stop");
+    console.log('enter')
+    Modal.confirm({
+      visible: true,
+      content: "123",
+      onOk: () => {
+        console.log("onOk");
+      },
+      onCancel: () => {
+        console.log("onCancel");
+      }
+    });
+    // updateReviewStatus(_id, "stop");
   }
   return (
     <CloseAndSureContainer
