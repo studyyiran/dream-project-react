@@ -36,6 +36,15 @@ const actions = {
         });
       callback(promise);
     };
+  },
+  updateReviewStatus: (id, status) => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      studyReviewServer.updateReviewStatus({ id, status }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setReviewList(res));
+      });
+    };
   }
 };
 

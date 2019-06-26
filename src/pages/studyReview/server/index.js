@@ -14,7 +14,7 @@ const reviewServer = {
   postNewReview: function postNewReview(data) {
     const url = localUrl + "/postReview";
     if ((Object.keys(data) || []).every(item => data[item])) {
-      return ajax.post(url, data)
+      return ajax.post(url, data);
     }
   },
   fromReviewToStudyTodo: data => {
@@ -29,13 +29,10 @@ const reviewServer = {
     return result;
   },
   // 状态相关的更新
-  updateReviewStatus: function updateReviewCount(id, status) {
+  updateReviewStatus: function updateReviewCount(data) {
     const url = localUrl + "/updateReviewStatus";
-    const result = ajax.put(url, { id, status });
-    return result.then(res => {
-      window.appRedux.dispatch({ type: "setReviewList", value: res });
-      return res;
-    });
+    const result = ajax.put(url, data);
+    return result;
   },
   hideReviewItem: function hideReviewItem(id) {
     const url = localUrl + "/hideReviewItem";

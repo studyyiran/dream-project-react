@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import moment from "moment";
 import ButtonInputComponent from "../buttonInputComponent";
+import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
 export default function(props) {
   return (
@@ -44,7 +45,7 @@ function ReviewListTable(props) {
 }
 
 function ReviewItem(props) {
-  const { info } = props;
+  const { info, updateReviewStatus } = props;
   const {
     _id,
     reviewContent,
@@ -55,25 +56,50 @@ function ReviewItem(props) {
     status
   } = info;
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
+  const isStart = status === "start";
+  function startReviewHandler() {
+    updateReviewStatus(_id, "start");
+  }
+  function finishCallBack() {
+    console.log("finishCallBack");
+  }
+  function stopCallBack() {
+    updateReviewStatus(_id, "stop");
+  }
   return (
-    <tr data-status={status} className="item">
-      <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
-      <th>{reviewContent}</th>
-      {/*<th>*/}
-      {/*<button date-type="start">开始</button>*/}
-      {/*</th>*/}
-      {/*<th>*/}
-      {/*<button date-type="delete">删除</button>*/}
-      {/*</th>*/}
-      {/*<th>*/}
-      {/*<button*/}
-      {/*onClick={() => {*/}
-      {/*props.fromReviewToStudyTodo(_id);*/}
-      {/*}}*/}
-      {/*>*/}
-      {/*转到学习*/}
-      {/*</button>*/}
-      {/*</th>*/}
-    </tr>
+    <CloseAndSureContainer
+      buttonContent={"submit"}
+      isShowClose={isStart}
+      isShowTag={isStart}
+      sureCallBack={finishCallBack}
+      closeCallBack={stopCallBack}
+    >
+      <tr data-status={status} className="item" onClick={startReviewHandler}>
+        <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
+        <th>{reviewContent}</th>
+      </tr>
+    </CloseAndSureContainer>
   );
+
+  // return (
+  //   <tr data-status={status} className="item">
+  //     <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
+  //     <th>{reviewContent}</th>
+  //     <th>
+  //       <button date-type="start">开始</button>
+  //     </th>
+  //     <th>
+  //       <button date-type="delete">删除</button>
+  //     </th>
+  //     <th>
+  //       <button
+  //         onClick={() => {
+  //           props.fromReviewToStudyTodo(_id);
+  //         }}
+  //       >
+  //         转到学习
+  //       </button>
+  //     </th>
+  //   </tr>
+  // );
 }
