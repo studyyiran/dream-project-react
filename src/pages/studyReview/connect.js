@@ -1,4 +1,4 @@
-import connect from "react-redux";
+import { connect } from "react-redux";
 import studyReviewActions from "./actions";
 
 export default function Connect(Page) {

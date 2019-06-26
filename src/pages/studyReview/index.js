@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Connect from "./connect";
 import ReviewList from "./components/reviewList";
+import Layout from "../components/layout";
 
 // 第一个疑惑，其实connect里面的内容，并不知道是否有副作用。（pure？纯函数？无状态？傻傻分不清）
 // 他的作用从文档上来看，是为了剥离redux影响。我觉得是这个意思。只要需要剥离redux的，都可以connect一下。
@@ -11,7 +12,11 @@ function Page(props) {
     // 这个和直接调用不一样。props传过来的，包装了dispatch
     getReviewList();
   }, [getReviewList, setReviewList]);
-  return <ReviewList {...props} />;
+  return (
+    <Layout>
+      <ReviewList {...props} />
+    </Layout>
+  );
 }
 
 // 为什么connect传入的页不是jsx 而是 Component
