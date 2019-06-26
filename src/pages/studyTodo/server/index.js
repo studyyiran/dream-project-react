@@ -2,12 +2,11 @@ import ajax from "../../../util/ajax";
 const host = "http://localhost:3000";
 const localUrl = host + "/studyTodo";
 const server = {
-  newStudyTodo: data => {
-    const url = localUrl + "/newStudyTodo";
+  newStudyTodoItem: data => {
+    const url = localUrl + "/newStudyTodoItem";
     // 不能为空
     if (Object.keys(data).every(item => data[item])) {
       return ajax.post(url, data);
-    } else {
     }
   },
   getStudyTodoList: () => {

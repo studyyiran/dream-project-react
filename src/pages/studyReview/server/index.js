@@ -22,6 +22,12 @@ const reviewServer = {
     } else {
     }
   },
+  fromReviewToStudyTodo: data => {
+    const url = localUrl + "/fromReviewToStudyTodo";
+    if (Object.keys(data).every(item => data[item])) {
+      return ajax.post(url, data);
+    }
+  },
   getReviewList: function getReviewList() {
     const url = localUrl + "/getReviewList";
     const result = ajax.get(url);

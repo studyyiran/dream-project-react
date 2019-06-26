@@ -8,8 +8,8 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route component={StudyTodo} />
-        <Route component={StudyReview} />
+        <Route path="/studyTodo" component={StudyTodo} />
+        <Route path="/studyReview" component={StudyReview} />
       </Switch>
     </BrowserRouter>
   );

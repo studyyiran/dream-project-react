@@ -3,8 +3,6 @@ import "./index.scss";
 import moment from "moment";
 
 export default function(props) {
-  const { reviewList = [] } = props;
-  console.log(props);
   return (
     <div className="review-list">
       <ReviewListTable {...props} />
@@ -13,7 +11,7 @@ export default function(props) {
 }
 
 function ReviewListTable(props) {
-  const { reviewList = [] } = props;
+  const { reviewList = [], ...other } = props;
   return (
     <div className="item">
       <table>
@@ -32,7 +30,7 @@ function ReviewListTable(props) {
         </thead>
         <tbody>
           {reviewList.map(item => (
-            <ReviewItem key={item._id} info={item} />
+            <ReviewItem key={item._id} info={item} {...other} />
           ))}
         </tbody>
       </table>
@@ -76,7 +74,13 @@ function ReviewItem(props) {
         <button date-type="delete">删除</button>
       </th>
       <th>
-        <button date-type="delete">删除</button>
+        <button
+          onClick={() => {
+            props.fromReviewToStudyTodo(_id);
+          }}
+        >
+          转到学习
+        </button>
       </th>
     </tr>
   );

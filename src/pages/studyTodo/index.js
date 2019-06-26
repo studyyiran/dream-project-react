@@ -3,11 +3,11 @@ import Connect from "./connect";
 import ReviewList from "./components/reviewList";
 
 function Page(props) {
-  const { setReviewList, getReviewList, reviewList } = props;
+  const { getList, list } = props;
   useEffect(() => {
-    getReviewList();
-  }, [getReviewList, setReviewList]);
-  return <ReviewList reviewList={reviewList} />;
+    getList();
+  }, [getList]);
+  return <ReviewList list={list} />;
 }
 
 export default Connect(Page);

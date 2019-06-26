@@ -11,7 +11,7 @@ export default function(props) {
 }
 
 function ReviewListTable(props) {
-  const { studyList = [] } = props;
+  const { list = [] } = props;
   return (
     <div className="item">
       <table>
@@ -24,7 +24,7 @@ function ReviewListTable(props) {
           </tr>
         </thead>
         <tbody>
-          {studyList.map(item => (
+          {list.map(item => (
             <ReviewItem key={item._id} info={item} />
           ))}
         </tbody>
@@ -37,7 +37,7 @@ function ReviewItem(props) {
   const { info } = props;
   const {
     _id,
-    reviewContent,
+    content,
     totalReviewNeedTime,
     needReviewCount,
     haveReviewCount,
@@ -48,7 +48,7 @@ function ReviewItem(props) {
   return (
     <tr data-status={status}>
       <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
-      <th>{reviewContent}</th>
+      <th>{content}</th>
       <th>{moment().to(deadLineDate)}</th>
       <th>
         {haveReviewCount}/{needReviewCount}

@@ -4,16 +4,16 @@ import thunk from "redux-thunk";
 import createLogger from "redux-logger";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import studyReviewReducers from "./reducers/studyReview";
-import studyTodoListReducers from "./reducers/studyTodoList";
+import studyTodoReducers from "./reducers/studyTodo";
 
 const rootReducer = combineReducers({
   studyReviewReducers,
-  studyTodoListReducers
+  studyTodoReducers
 });
 
 const middleware = [thunk];
 if (process.env.NODE_ENV !== "production") {
-  middleware.push(createLogger);
+  // middleware.push(createLogger);
 }
 const initState = {};
 const store = createStore(

@@ -14,6 +14,15 @@ const actions = {
         dispatch(actions.setReviewList(res));
       });
     };
+  },
+  fromReviewToStudyTodo: data => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      studyReviewServer.fromReviewToStudyTodo({ id: data }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setReviewList(res));
+      });
+    };
   }
 };
 
