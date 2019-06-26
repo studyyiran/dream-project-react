@@ -7,20 +7,20 @@ export default function(props) {
     buttonContent,
     closeCallBack,
     sureCallBack,
-    isShowTag = false,
+    isShowSure = false,
     isShowClose = false
   } = props;
   return (
     <div className="extra-sure-tag-container">
       <div className="close-container">
         {children}
-        {isShowTag ? (
+        {isShowClose ? (
           <div onClick={closeCallBack} className="close-button circle">
             X
           </div>
         ) : null}
       </div>
-      {isShowTag ? (
+      {isShowSure ? (
         <button onClick={sureCallBack}>{buttonContent}</button>
       ) : null}
     </div>

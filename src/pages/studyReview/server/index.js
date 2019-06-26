@@ -11,18 +11,21 @@ const reviewServer = {
       return res;
     });
   },
+  // 新增
   postNewReview: function postNewReview(data) {
     const url = localUrl + "/postReview";
     if ((Object.keys(data) || []).every(item => data[item])) {
       return ajax.post(url, data);
     }
   },
+  // 移动到学习
   fromReviewToStudyTodo: data => {
     const url = localUrl + "/fromReviewToStudyTodo";
     if (Object.keys(data).every(item => data[item])) {
       return ajax.post(url, data);
     }
   },
+  // 获取列表
   getReviewList: function getReviewList() {
     const url = localUrl + "/getReviewList";
     const result = ajax.get(url);
@@ -34,13 +37,10 @@ const reviewServer = {
     const result = ajax.put(url, data);
     return result;
   },
-  hideReviewItem: function hideReviewItem(id) {
+  // 删除
+  hideReviewItem: function hideReviewItem(data) {
     const url = localUrl + "/hideReviewItem";
-    const result = ajax.put(url, { id });
-    return result.then(res => {
-      window.appRedux.dispatch({ type: "setReviewList", value: res });
-      return res;
-    });
+    return ajax.put(url, data);
   }
 };
 

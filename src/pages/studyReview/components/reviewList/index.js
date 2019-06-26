@@ -65,24 +65,32 @@ function ReviewItem(props) {
     console.log("finishCallBack");
   }
   function stopCallBack() {
-    console.log('enter')
-    Modal.confirm({
-      visible: true,
-      content: "123",
-      onOk: () => {
-        console.log("onOk");
-      },
-      onCancel: () => {
-        console.log("onCancel");
-      }
-    });
+``    if (isStart) {
+      updateReviewStatus(_id, "stop");
+    } else {
+      Modal.confirm({
+        content: "123",
+        onOk: () => {
+          // 暂停
+          console.log("onOk");
+          props.hideReviewItem(_id)
+        },
+        onCancel: () => {
+          props.fromReviewToStudyTodo(_id);
+          console.log("onCancel");
+        },
+        okText: '确认删除',
+        cancelText: '移到学习',
+      });
+    }
+
     // updateReviewStatus(_id, "stop");
   }
   return (
     <CloseAndSureContainer
       buttonContent={"submit"}
-      isShowClose={isStart}
-      isShowTag={isStart}
+      isShowClose={true}
+      isShowSure={isStart}
       sureCallBack={finishCallBack}
       closeCallBack={stopCallBack}
     >

@@ -189,7 +189,7 @@ class Modal extends React.Component {
               style={style}
               className="modal_body zao-font-normal zao-color-9"
             >
-              {this.props.children}
+              {this.props.content}
             </div>
             {this.renderFooter()}
           </div>
@@ -199,8 +199,9 @@ class Modal extends React.Component {
   }
 
   render() {
+
     // 这块需要考虑15
-    if (this.props.visible && this.props.children) {
+    if (this.props.visible && this.props.content) {
       if (!this.outNode) {
         //
         this.outNode = document.createElement("div");
@@ -213,7 +214,7 @@ class Modal extends React.Component {
 }
 
 Modal.defaultProps = {
-  children: "",
+  content: "",
   maskClosable: true,
   closable: false,
   footer: "default",
@@ -225,7 +226,6 @@ Modal.defaultProps = {
 };
 
 Modal.confirm = function(props) {
-  // 如果没有设定默认的怎么办？
   const modalRoot = bodyRoot;
   let addEle = document.createElement("div");
   modalRoot.appendChild(addEle);

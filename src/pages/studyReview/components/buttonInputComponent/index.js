@@ -52,7 +52,7 @@ export default function ButtonInputComponent(props) {
     <CloseAndSureContainer
       buttonContent={"submit"}
       isShowClose={isInput}
-      isShowTag={isInput}
+      isShowSure={isInput}
       sureCallBack={postHandler}
       closeCallBack={buttonHandler}
     >

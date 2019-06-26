@@ -45,6 +45,15 @@ const actions = {
         dispatch(actions.setReviewList(res));
       });
     };
+  },
+  hideReviewItem: (id) => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      studyReviewServer.hideReviewItem({ id }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setReviewList(res));
+      });
+    };
   }
 };
 
