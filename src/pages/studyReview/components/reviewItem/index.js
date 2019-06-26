@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from "react";
-import './index.scss'
+import React, { useEffect, useState, useRef } from "react";
+import "./index.scss";
 import Timer from "../../../../util/timer";
 import moment from "moment";
 import Modal from "../../../../components/modal";
@@ -7,7 +7,7 @@ import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
 export default function ReviewItem(props) {
   const { info, updateReviewStatus } = props;
-  const refTimer = useRef()
+  const refTimer = useRef();
   const {
     _id,
     reviewContent,
@@ -19,30 +19,33 @@ export default function ReviewItem(props) {
     createTime,
     status
   } = info;
-  const [timer, setTimer] = useState(0)
+  const [timer, setTimer] = useState(0);
   useEffect(() => {
-    if (status === 'start') {
-      const time = Number(continueSecond) + Number(Date.now()) - Number(startReviewTime)
+    if (status === "start") {
+      const time =
+        Number(continueSecond) + Number(Date.now()) - Number(startReviewTime);
       const info = {
         minInterval: -1000,
         time,
         runCallBack: times => {
           if (times) {
-            setTimer(times)
+            setTimer(times);
           } else {
-
           }
         },
         finishCallBack: () => {
-          setTimer([])
+          setTimer([]);
         }
       };
-      refTimer.current = new Timer(info)
-      refTimer.current.start()
+      refTimer.current = new Timer(info);
+      refTimer.current.start();
     } else {
-      refTimer && refTimer.current && refTimer.current.stop && refTimer.current.stop()
+      refTimer &&
+        refTimer.current &&
+        refTimer.current.stop &&
+        refTimer.current.stop();
     }
-  }, [status])
+  }, [continueSecond, startReviewTime, status]);
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
   function startReviewHandler() {
@@ -59,40 +62,40 @@ export default function ReviewItem(props) {
         content: "123",
         onOk: () => {
           // 暂停
-          props.hideReviewItem(_id)
+          props.hideReviewItem(_id);
         },
         onCancel: () => {
           props.fromReviewToStudyTodo(_id);
         },
-        okText: '确认删除',
-        cancelText: '移到学习',
+        okText: "确认删除",
+        cancelText: "移到学习"
       });
     }
   }
   function renderTimer() {
     if (isStart) {
-      const arr = ['天','时','分','秒'];
-      let timeString = '持续复习：';
+      const arr = ["天", "时", "分", "秒"];
+      let timeString = "持续复习：";
       (timer || []).forEach((item, index) => {
         if (index !== 0) {
           if (index === 1) {
-            item += 24 * timer[0]
+            item += 24 * timer[0];
           }
-          timeString = timeString + (`${item}`)
+          timeString = timeString + `${item}`;
           if (index !== arr.length - 1) {
-            timeString = timeString + ':'
+            timeString = timeString + ":";
           }
         }
-      })
-      return timeString
+      });
+      return timeString;
     } else {
-      return null
+      return null;
     }
   }
   return (
     <CloseAndSureContainer
       buttonContent={"submit"}
-      isShowClose={status !== 'finish'}
+      isShowClose={status !== "finish"}
       isShowSure={isStart}
       sureCallBack={finishCallBack}
       closeCallBack={stopCallBack}

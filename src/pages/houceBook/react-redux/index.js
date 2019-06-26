@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import server from "../server";
 import { createStore, applyMiddleware } from "redux";
 import { Provider, connect } from "react-redux";
 import ReduxThunk from "redux-thunk";
@@ -54,10 +53,7 @@ export default function() {
   renderFunc();
   // store.subscribe(renderFunc);
 
-
-
   function renderFunc() {
-    console.log('renderFunc ')
     ReactDOM.render(
       <Provider store={store}>
         <WrapperList test={"test"} />

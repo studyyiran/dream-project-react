@@ -1,7 +1,5 @@
 import { useState } from "react";
 import server from "../../server";
-import addAction from "../actions";
-import connect from "react-redux/es/connect/connect";
 import React from "react";
 
 export default function List(props) {

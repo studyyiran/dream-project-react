@@ -52,7 +52,6 @@ function reducer(preState, action = {}) {
     case "add":
       const { todoList } = preState;
       const arr = todoList.concat([value]);
-      console.log(arr)
       return { ...preState, todoList: arr };
     default:
       return preState;
@@ -76,7 +75,6 @@ export default function() {
     return store.dispatch({ type: "add", value });
   }
   const target2 = document.querySelector("#app2");
-
 
   renderFunc();
   store.subscribe(renderFunc);

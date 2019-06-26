@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import "./index.scss";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
 export default function ButtonInputComponent(props) {
@@ -47,17 +48,23 @@ export default function ButtonInputComponent(props) {
   if (isInput) {
     dom = <input ref={inputRef} value={inputValue} onChange={inputHandler} />;
   } else {
-    dom = <button onClick={buttonHandler}>{buttonContent}</button>;
+    dom = (
+      <button className={"new-button"} onClick={buttonHandler}>
+        {buttonContent}
+      </button>
+    );
   }
   return (
-    <CloseAndSureContainer
-      buttonContent={"submit"}
-      isShowClose={isInput}
-      isShowSure={isInput}
-      sureCallBack={postHandler}
-      closeCallBack={buttonHandler}
-    >
-      {dom}
-    </CloseAndSureContainer>
+    <div className="review-new-button-container">
+      <CloseAndSureContainer
+        buttonContent={"submit"}
+        isShowClose={isInput}
+        isShowSure={isInput}
+        sureCallBack={postHandler}
+        closeCallBack={buttonHandler}
+      >
+        {dom}
+      </CloseAndSureContainer>
+    </div>
   );
 }

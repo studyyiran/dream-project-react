@@ -46,7 +46,7 @@ const actions = {
       });
     };
   },
-  hideReviewItem: (id) => {
+  hideReviewItem: id => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
       studyReviewServer.hideReviewItem({ id }).then(res => {
