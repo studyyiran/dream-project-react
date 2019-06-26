@@ -2,6 +2,7 @@
   display: flex;
   .close-container {
     position: relative;
+    flex: 1;
     .close-button {
       position: absolute;
       width: 10px;

@@ -40,6 +40,7 @@ export default function ButtonInputComponent(props) {
         });
       });
     } else {
+      console.error("弹框！");
       console.error("empty");
     }
   }

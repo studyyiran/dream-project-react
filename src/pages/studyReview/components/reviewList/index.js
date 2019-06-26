@@ -1,125 +1,18 @@
 import React from "react";
 import "./index.scss";
-import moment from "moment";
 import ButtonInputComponent from "../buttonInputComponent";
-import CloseAndSureContainer from "../../../components/closeAndSureContainer";
-import Modal from "../../../../components/modal";
+import ReviewItem from "../reviewItem";
 
 export default function(props) {
-  return (
-    <div className="review-list">
-      <ReviewListTable {...props} />
-    </div>
-  );
-}
-
-function ReviewListTable(props) {
   const { reviewList = [], ...other } = props;
   return (
-    <>
+    <div className="review-list">
       <ButtonInputComponent {...props} buttonContent={"new study review"} />
       <div className="list">
-        <table>
-          <thead>
-            <tr>
-              <th>创建时间</th>
-              <th>内容</th>
-              {/*<th>开始</th>*/}
-              {/*<th>删除</th>*/}
-              {/*<th>生命周期</th>*/}
-              {/*<th>复习周期</th>*/}
-              {/*<th>+1</th>*/}
-
-              {/*<th>结束</th>*/}
-              {/*<th>修改</th>*/}
-            </tr>
-          </thead>
-          <tbody>
-            {reviewList.map(item => (
-              <ReviewItem key={item._id} info={item} {...other} />
-            ))}
-          </tbody>
-        </table>
+        {reviewList.map(item => (
+          <ReviewItem key={item._id} info={item} {...other} />
+        ))}
       </div>
-    </>
+    </div>
   );
-}
-
-function ReviewItem(props) {
-  const { info, updateReviewStatus } = props;
-  const {
-    _id,
-    reviewContent,
-    totalReviewNeedTime,
-    needReviewCount,
-    haveReviewCount,
-    createTime,
-    status
-  } = info;
-  const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
-  const isStart = status === "start";
-  function startReviewHandler() {
-    updateReviewStatus(_id, "start");
-  }
-  function finishCallBack() {
-    console.log("finishCallBack");
-  }
-  function stopCallBack() {
-``    if (isStart) {
-      updateReviewStatus(_id, "stop");
-    } else {
-      Modal.confirm({
-        content: "123",
-        onOk: () => {
-          // 暂停
-          console.log("onOk");
-          props.hideReviewItem(_id)
-        },
-        onCancel: () => {
-          props.fromReviewToStudyTodo(_id);
-          console.log("onCancel");
-        },
-        okText: '确认删除',
-        cancelText: '移到学习',
-      });
-    }
-
-    // updateReviewStatus(_id, "stop");
-  }
-  return (
-    <CloseAndSureContainer
-      buttonContent={"submit"}
-      isShowClose={true}
-      isShowSure={isStart}
-      sureCallBack={finishCallBack}
-      closeCallBack={stopCallBack}
-    >
-      <tr data-status={status} className="item" onClick={startReviewHandler}>
-        <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
-        <th>{reviewContent}</th>
-      </tr>
-    </CloseAndSureContainer>
-  );
-
-  // return (
-  //   <tr data-status={status} className="item">
-  //     <th>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</th>
-  //     <th>{reviewContent}</th>
-  //     <th>
-  //       <button date-type="start">开始</button>
-  //     </th>
-  //     <th>
-  //       <button date-type="delete">删除</button>
-  //     </th>
-  //     <th>
-  //       <button
-  //         onClick={() => {
-  //           props.fromReviewToStudyTodo(_id);
-  //         }}
-  //       >
-  //         转到学习
-  //       </button>
-  //     </th>
-  //   </tr>
-  // );
 }
