@@ -1,71 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import "./index.scss";
 import moment from "moment";
-import ExtraSureTag from "../../../components/extraSureTag";
+import ButtonInputComponent from "../buttonInputComponent";
 
 export default function(props) {
   return (
     <div className="review-list">
       <ReviewListTable {...props} />
     </div>
-  );
-}
-
-function ButtonInputComponent(props) {
-  const { buttonContent, postNewReview } = props;
-  const [isInput, setIsInput] = useState(false);
-  const [inputValue, setInutValue] = useState("");
-  const inputRef = useRef();
-  let dom;
-
-  useEffect(() => {
-    if (isInput) {
-      if (inputRef && inputRef.current) {
-        // why this can work.What is .focus meanning? is func to control dom?
-        inputRef.current.focus();
-      }
-    }
-  }, [isInput]);
-  // function可以没有this。
-  function inputHandler(e) {
-    const value = e.target.value;
-    setInutValue(value);
-  }
-
-  function buttonHandler() {
-    setIsInput(currentBool => {
-      return !currentBool;
-    });
-  }
-
-  function postHandler() {
-    if (inputValue) {
-      postNewReview(inputValue, p => {
-        p.then(() => {
-          setInutValue("");
-          setIsInput(false);
-        }).catch(err => {
-          console.error("弹框！");
-          console.error(err);
-        });
-      });
-    } else {
-      console.error("empty");
-    }
-  }
-  if (isInput) {
-    dom = <input ref={inputRef} value={inputValue} onChange={inputHandler} />;
-  } else {
-    dom = <button onClick={buttonHandler}>{buttonContent}</button>;
-  }
-  return (
-    <ExtraSureTag
-      buttonContent={"submit"}
-      isShow={isInput}
-      buttonCallBack={postHandler}
-    >
-      {dom}
-    </ExtraSureTag>
   );
 }
 

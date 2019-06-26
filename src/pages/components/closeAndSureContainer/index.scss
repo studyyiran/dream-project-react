@@ -1,0 +1,19 @@
+.extra-sure-tag-container {
+  display: flex;
+  .close-container {
+    position: relative;
+    .close-button {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      right: 0;
+      top: 0;
+    }
+    .circle {
+      background: red;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
