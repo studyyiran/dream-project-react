@@ -27,7 +27,11 @@ export default function ReviewItem(props) {
         minInterval: -1000,
         time,
         runCallBack: times => {
-          setTimer(times)
+          if (times) {
+            setTimer(times)
+          } else {
+
+          }
         },
         finishCallBack: () => {
           setTimer([])
@@ -68,10 +72,16 @@ export default function ReviewItem(props) {
   function renderTimer() {
     if (isStart) {
       const arr = ['天','时','分','秒'];
-      let timeString = '';
-      (timer || []).map((item, index) => {
-        if (item) {
-          timeString = timeString + (`${item}${arr[index]}`)
+      let timeString = '持续复习：';
+      (timer || []).forEach((item, index) => {
+        if (index !== 0) {
+          if (index === 1) {
+            item += 24 * timer[0]
+          }
+          timeString = timeString + (`${item}`)
+          if (index !== arr.length - 1) {
+            timeString = timeString + ':'
+          }
         }
       })
       return timeString

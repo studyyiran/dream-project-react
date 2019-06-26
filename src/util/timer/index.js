@@ -8,6 +8,7 @@ function index({time, runCallBack, finishCallBack, minInterval}) {
 }
 
 index.prototype.start = function () {
+  this.perSecondCall(true)
   this.timeIntervalId = window.setInterval(() => {
     this.perSecondCall()
   }, Math.abs(this.minInterval))
@@ -17,8 +18,10 @@ index.prototype.stop = function () {
   window.clearInterval(this.timeIntervalId)
 }
 
-index.prototype.perSecondCall = function () {
-  if (this.remainTime >= this.minInterval) {
+index.prototype.perSecondCall = function (firstCall) {
+  if (firstCall) {
+    this.runCallBack && this.runCallBack(this.format(this.remainTime))
+  } else if (this.remainTime >= this.minInterval) {
     this.remainTime = this.remainTime - this.minInterval
     this.runCallBack && this.runCallBack(this.format(this.remainTime))
   } else {

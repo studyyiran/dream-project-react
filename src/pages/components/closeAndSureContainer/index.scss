@@ -1,5 +1,6 @@
 .extra-sure-tag-container {
   display: flex;
+  max-width: 700px;
   .close-container {
     position: relative;
     flex: 1;
@@ -11,7 +12,7 @@
       top: 0;
     }
     .circle {
-      background: red;
+      background: orange;
       display: flex;
       align-items: center;
       justify-content: center;
