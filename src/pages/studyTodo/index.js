@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Connect from "./connect";
-import ReviewList from "./components/reviewList";
+import ReviewList from "./components/studyTodoList";
 import Layout from "../components/layout";
 
 function Page(props) {

@@ -22,6 +22,24 @@ const actions = {
         dispatch(actions.setList(res));
       });
     };
+  },
+  hideStudyItem: data => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      return server.hideStudyItem({ id: data }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setList(res));
+      });
+    };
+  },
+  changeStudyItemStatus: (id, status) => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      return server.changeStudyItemStatus({ id, status }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setList(res));
+      });
+    };
   }
 };
 

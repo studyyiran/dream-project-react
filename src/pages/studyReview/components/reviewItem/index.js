@@ -49,7 +49,10 @@ export default function ReviewItem(props) {
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
   function startReviewHandler() {
-    updateReviewStatus(_id, "start");
+    // 这个提交后台，会有什么影响？
+    if (!isStart) {
+      updateReviewStatus(_id, "start");
+    }
   }
   function finishCallBack() {
     updateReviewStatus(_id, "add");
@@ -100,9 +103,10 @@ export default function ReviewItem(props) {
       sureCallBack={finishCallBack}
       closeCallBack={stopCallBack}
     >
-      <div data-status={status} className="item" onClick={startReviewHandler}>
+      <div data-status={status} className="review-item" onClick={startReviewHandler}>
         <span>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</span>
         <p>{reviewContent}</p>
+        <span>{moment().to(deadLineDate)}</span>
         <span>{renderTimer()}</span>
       </div>
     </CloseAndSureContainer>
