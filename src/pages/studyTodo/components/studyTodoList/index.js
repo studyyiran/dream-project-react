@@ -3,10 +3,16 @@ import "./index.scss";
 import moment from "moment";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import useTimer from "../../../useHook/useTimer";
+import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
 
 export default function(props) {
   return (
     <div className="study-todo-list">
+      <ButtonInputComponent
+        {...props}
+        postInputValue={props.newStudyTodoItem}
+        buttonContent={"new study todo"}
+      />
       <StudyTodoList {...props} />
     </div>
   );

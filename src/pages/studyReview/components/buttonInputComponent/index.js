@@ -3,7 +3,7 @@ import "./index.scss";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
 export default function ButtonInputComponent(props) {
-  const { buttonContent, postNewReview } = props;
+  const { buttonContent, postInputValue } = props;
   const [isInput, setIsInput] = useState(false);
   const [inputValue, setInutValue] = useState("");
   const inputRef = useRef();
@@ -31,15 +31,15 @@ export default function ButtonInputComponent(props) {
 
   function postHandler() {
     if (inputValue) {
-      postNewReview(inputValue, p => {
-        p.then(() => {
+      postInputValue(inputValue)
+        .then(() => {
           setInutValue("");
           setIsInput(false);
-        }).catch(err => {
+        })
+        .catch(err => {
           console.error("弹框！");
           console.error(err);
         });
-      });
     } else {
       console.error("弹框！");
       console.error("empty");
