@@ -5,25 +5,12 @@ import moment from "moment";
 import Modal from "../../../../components/modal";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 
-export default function ReviewItem(props) {
-  const { info, updateReviewStatus } = props;
-  const refTimer = useRef();
-  const {
-    _id,
-    reviewContent,
-    totalReviewNeedTime,
-    needReviewCount,
-    haveReviewCount,
-    startReviewTime,
-    continueSecond,
-    createTime,
-    status
-  } = info;
+function useTimer(status, time) {
   const [timer, setTimer] = useState(0);
+  const refTimer = useRef();
+  // 这块为什么不能带time万？
   useEffect(() => {
     if (status === "start") {
-      const time =
-        Number(continueSecond) + Number(Date.now()) - Number(startReviewTime);
       const info = {
         minInterval: -1000,
         time,
@@ -45,12 +32,40 @@ export default function ReviewItem(props) {
         refTimer.current.stop &&
         refTimer.current.stop();
     }
-  }, [continueSecond, startReviewTime, status]);
+  }, [status, time]);
+  useEffect(() => {
+    // 退出页面关闭
+    return () => {
+      refTimer &&
+        refTimer.current &&
+        refTimer.current.stop &&
+        refTimer.current.stop();
+    };
+  }, []);
+  return timer;
+}
+
+export default function ReviewItem(props) {
+  const { info, updateReviewStatus } = props;
+
+  const {
+    _id,
+    reviewContent,
+    totalReviewNeedTime,
+    startReviewTime,
+    continueSecond,
+    createTime,
+    status
+  } = info;
+  const timer = useTimer(
+    status,
+    Number(continueSecond) + Number(Date.now()) - Number(startReviewTime)
+  );
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
   function startReviewHandler() {
     // 这个提交后台，会有什么影响？
-    if (!isStart) {
+    if (status !== "start" && status !== "finish") {
       updateReviewStatus(_id, "start");
     }
   }
@@ -95,6 +110,14 @@ export default function ReviewItem(props) {
       return null;
     }
   }
+
+  function renderDeadLineTime() {
+    if (status === "finish") {
+      return `持续复习了${moment.duration(continueSecond).humanize()}`;
+    } else {
+      return moment().to(deadLineDate);
+    }
+  }
   return (
     <CloseAndSureContainer
       buttonContent={"submit"}
@@ -103,10 +126,14 @@ export default function ReviewItem(props) {
       sureCallBack={finishCallBack}
       closeCallBack={stopCallBack}
     >
-      <div data-status={status} className="review-item" onClick={startReviewHandler}>
+      <div
+        data-status={status}
+        className="review-item"
+        onClick={startReviewHandler}
+      >
         <span>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</span>
         <p>{reviewContent}</p>
-        <span>{moment().to(deadLineDate)}</span>
+        <span>{renderDeadLineTime()}</span>
         <span>{renderTimer()}</span>
       </div>
     </CloseAndSureContainer>

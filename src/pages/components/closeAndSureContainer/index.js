@@ -4,11 +4,11 @@ import "./index.scss";
 export default function(props) {
   const {
     children,
-    buttonContent,
-    closeCallBack,
+    buttonContent, // 完成按钮内容
+    isShowSure = false, // 展示完成按钮
     sureCallBack,
-    isShowSure = false,
-    isShowClose = false
+    isShowClose = false, // 展示关闭按钮
+    closeCallBack
   } = props;
   return (
     <div className="extra-sure-tag-container">
