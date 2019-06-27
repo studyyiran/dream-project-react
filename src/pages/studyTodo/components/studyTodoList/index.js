@@ -55,14 +55,17 @@ function Item(props) {
     if (isStart) {
       return (
         <div>
-          <span>学习持续了</span>
+          <span>学习持续了：</span>
           <RenderTimer timer={timer} />
         </div>
       );
     } else {
-      return null;
+      return `持续study了：${moment
+        .duration(Number(continueSecond))
+        .humanize()}`;
     }
   }
+
   return (
     <CloseAndSureContainer
       buttonContent="完成"
@@ -87,15 +90,18 @@ function Item(props) {
 function RenderTimer(props) {
   const { timer } = props;
   const arr = ["天", "时", "分", "秒"];
-  let timeString = "持续复习：";
+  let timeString = "";
   (timer || []).forEach((item, index) => {
-    if (index !== 0) {
-      if (index === 1) {
-        item += 24 * timer[0];
+    if (index === 0) {
+      if (item) {
+        timeString = `${item}天`;
       }
+    } else {
       timeString = timeString + `${item}`;
       if (index !== arr.length - 1) {
-        timeString = timeString + ":";
+        if (index !== 0) {
+          timeString = timeString + ":";
+        }
       }
     }
   });

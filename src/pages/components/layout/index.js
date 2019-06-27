@@ -8,13 +8,13 @@ export default function(props) {
     <div className="layout">
       <ul>
         <li>
-          <NavLink activeClassName="active" to={"/studyTodo"}>
-            studyTodo
+          <NavLink activeClassName="active" to={"/studyReview"}>
+            studyReview
           </NavLink>
         </li>
         <li>
-          <NavLink activeClassName="active" to={"/studyReview"}>
-            studyReview
+          <NavLink activeClassName="active" to={"/studyTodo"}>
+            studyTodo
           </NavLink>
         </li>
       </ul>

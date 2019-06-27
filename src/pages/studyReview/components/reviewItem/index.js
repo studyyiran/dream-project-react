@@ -12,14 +12,14 @@ export default function ReviewItem(props) {
     _id,
     reviewContent,
     totalReviewNeedTime,
-    startReviewTime,
+    startTime,
     continueSecond,
     createTime,
     status
   } = info;
   const timer = useTimer(
     status,
-    Number(continueSecond) + Number(Date.now()) - Number(startReviewTime)
+    Number(continueSecond) + Number(Date.now()) - Number(startTime)
   );
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
@@ -73,7 +73,7 @@ export default function ReviewItem(props) {
 
   function renderDeadLineTime() {
     if (status === "finish") {
-      return `持续复习了${moment.duration(continueSecond).humanize()}`;
+      return `持续复习了${moment.duration(Number(continueSecond)).humanize()}`;
     } else {
       return moment().to(deadLineDate);
     }
