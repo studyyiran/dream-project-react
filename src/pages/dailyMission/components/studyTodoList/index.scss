@@ -1,0 +1,17 @@
+.study-todo-list {
+  .study-todo-item {
+    display: flex;
+    padding: 10px;
+    border: 1px solid red;
+  }
+  .study-todo-item[data-status='start'] {
+    background: red;
+  }
+  .study-todo-item[data-status='finish'] {
+    background: green;
+  }
+
+}
+
+
+

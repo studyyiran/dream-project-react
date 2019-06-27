@@ -17,6 +17,11 @@ export default function(props) {
             studyTodo
           </NavLink>
         </li>
+        <li>
+          <NavLink activeClassName="active" to={"/dailyMission"}>
+            dailyMission
+          </NavLink>
+        </li>
       </ul>
       <div>{children}</div>
     </div>
