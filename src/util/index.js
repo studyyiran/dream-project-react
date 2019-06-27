@@ -13,11 +13,11 @@ id 用来保存节点信息的id
  */
 
 function cacheDomWithId(dom, id) {
-  let slot = document.querySelector(`#${id}`)
+  let slot = document.querySelector(`#${id}`);
   if (!slot) {
-    slot = document.createElement('div')
-    slot.id = id
-    slot.appendChild(dom)
+    slot = document.createElement("div");
+    slot.id = id;
+    slot.appendChild(dom);
   }
-  return slot
+  return slot;
 }

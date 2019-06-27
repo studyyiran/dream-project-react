@@ -1,7 +1,5 @@
-function moment () {
-  return new utilMoment(arguments)
+function moment() {
+  return new utilMoment(arguments);
 }
 
-function utilMoment () {
-
-}
+function utilMoment() {}

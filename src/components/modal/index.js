@@ -199,7 +199,6 @@ class Modal extends React.Component {
   }
 
   render() {
-
     // 这块需要考虑15
     if (this.props.visible && this.props.content) {
       if (!this.outNode) {
