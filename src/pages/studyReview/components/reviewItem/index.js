@@ -1,49 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import "./index.scss";
-import Timer from "../../../../util/timer";
+import useTimer from "../../../useHook/useTimer";
 import moment from "moment";
 import Modal from "../../../../components/modal";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
-
-function useTimer(status, time) {
-  const [timer, setTimer] = useState(0);
-  const refTimer = useRef();
-  // 这块为什么不能带time万？
-  useEffect(() => {
-    if (status === "start") {
-      const info = {
-        minInterval: -1000,
-        time,
-        runCallBack: times => {
-          if (times) {
-            setTimer(times);
-          } else {
-          }
-        },
-        finishCallBack: () => {
-          setTimer([]);
-        }
-      };
-      refTimer.current = new Timer(info);
-      refTimer.current.start();
-    } else {
-      refTimer &&
-        refTimer.current &&
-        refTimer.current.stop &&
-        refTimer.current.stop();
-    }
-  }, [status, time]);
-  useEffect(() => {
-    // 退出页面关闭
-    return () => {
-      refTimer &&
-        refTimer.current &&
-        refTimer.current.stop &&
-        refTimer.current.stop();
-    };
-  }, []);
-  return timer;
-}
 
 export default function ReviewItem(props) {
   const { info, updateReviewStatus } = props;
