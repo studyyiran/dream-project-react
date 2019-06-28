@@ -10,8 +10,8 @@ export default function(props) {
     <div className="study-todo-list">
       <ButtonInputComponent
         {...props}
-        postInputValue={props.newStudyTodoItem}
-        buttonContent={"new study todo"}
+        postInputValue={props.newItem}
+        buttonContent={"new item ^ ^"}
       />
       <StudyTodoList {...props} />
     </div>
@@ -30,26 +30,26 @@ function StudyTodoList(props) {
 }
 
 function Item(props) {
-  const { info, changeStudyItemStatus, hideStudyItem } = props;
+  const { info, changeStatus, hide } = props;
   const { _id, createTime, content, status, startTime, continueSecond } = info;
   const isStart = status === "start";
   function startHandler() {
     // 开始
     if (status !== "finish" && status !== "start") {
-      changeStudyItemStatus(_id, "start");
+      changeStatus(_id, "start");
     }
   }
   function sureHandler() {
     // 完成
-    changeStudyItemStatus(_id, "finish");
+    changeStatus(_id, "finish");
   }
   function closeHandler() {
     if (isStart) {
       // 取消状态
-      changeStudyItemStatus(_id, "stop");
+      changeStatus(_id, "stop");
     } else {
       // 删除任务
-      hideStudyItem(_id);
+      hide(_id);
     }
   }
 
