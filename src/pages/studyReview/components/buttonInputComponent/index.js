@@ -2,41 +2,26 @@ import React, { useEffect, useRef, useState } from "react";
 import "./index.scss";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 /*
+功能：
+
 children可以定义左侧的内容。让它不仅仅是input
  */
-export default function ButtonInputComponent(props) {
-  const { buttonContent, postInputValue, children } = props;
-  const [isInput, setIsInput] = useState(false);
-  const [inputValue, setInutValue] = useState("");
-  const inputRef = useRef();
-  let dom;
-
-  useEffect(() => {
-    if (isInput) {
+/*
+useEffect(() => {
+    if (mainButtonStatus) {
       if (inputRef && inputRef.current) {
         // why this can work.What is .focus meanning? is func to control dom?
         inputRef.current.focus();
       }
     }
-  }, [isInput]);
-  // function可以没有this。
-  function inputHandler(e) {
-    const value = e.target.value;
-    setInutValue(value);
-  }
-
-  function buttonHandler() {
-    setIsInput(currentBool => {
-      return !currentBool;
-    });
-  }
+  }, [mainButtonStatus]);
 
   function postHandler() {
     if (inputValue) {
       postInputValue(inputValue)
         .then(() => {
           setInutValue("");
-          setIsInput(false);
+          setMainButtonStatus(false);
         })
         .catch(err => {
           console.error("弹框！");
@@ -47,7 +32,34 @@ export default function ButtonInputComponent(props) {
       console.error("empty");
     }
   }
-  if (isInput) {
+ */
+
+export default function ButtonInputComponent(props) {
+  const { buttonContent, children, sureCallBack, submitId } = props;
+  const [mainButtonStatus, setMainButtonStatus] = useState(false);
+  const [inputValue, setInutValue] = useState("");
+  const inputRef = useRef();
+  let dom;
+
+  // function可以没有this。
+  function inputHandler(e) {
+    const value = e.target.value;
+    setInutValue(value);
+  }
+
+  function sureCallBackHandler() {
+    if (!submitId && sureCallBack) {
+      sureCallBack();
+    }
+  }
+
+  function buttonHandler() {
+    setMainButtonStatus(currentBool => {
+      return !currentBool;
+    });
+  }
+
+  if (mainButtonStatus) {
     if (children) {
       dom = children;
     } else {
@@ -63,10 +75,11 @@ export default function ButtonInputComponent(props) {
   return (
     <div className="review-new-button-container">
       <CloseAndSureContainer
+        submitId={submitId}
         buttonContent={"submit"}
-        isShowClose={isInput}
-        isShowSure={isInput}
-        sureCallBack={postHandler}
+        isShowClose={mainButtonStatus}
+        isShowSure={mainButtonStatus}
+        sureCallBack={sureCallBackHandler}
         closeCallBack={buttonHandler}
       >
         {dom}

@@ -1,8 +1,12 @@
 import React from "react";
 import "./index.scss";
-
+/*
+提供了 关闭按钮 和对应的回调
+提供了 打开按钮 和对应的回调
+ */
 export default function(props) {
   const {
+    submitId,
     children,
     buttonContent, // 完成按钮内容
     isShowSure = false, // 展示完成按钮
@@ -21,7 +25,7 @@ export default function(props) {
         ) : null}
       </div>
       {isShowSure ? (
-        <button onClick={sureCallBack}>{buttonContent}</button>
+        <button form={submitId} onClick={sureCallBack}>{buttonContent}</button>
       ) : null}
     </div>
   );

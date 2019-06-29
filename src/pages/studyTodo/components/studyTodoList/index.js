@@ -4,15 +4,24 @@ import moment from "moment";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import useTimer from "../../../useHook/useTimer";
 import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
+import Form from "../../../components/form";
 
 export default function(props) {
+  const submitId = "newStudyTodo";
   return (
     <div className="study-todo-list">
       <ButtonInputComponent
         {...props}
         postInputValue={props.newStudyTodoItem}
         buttonContent={"new study todo"}
-      />
+        submitId={submitId}
+      >
+        <Form submitId={submitId} onSubmit={e => props.newStudyTodoItem(e)}>
+          <label>
+            content: <input name="content" />
+          </label>
+        </Form>
+      </ButtonInputComponent>
       <StudyTodoList {...props} />
     </div>
   );

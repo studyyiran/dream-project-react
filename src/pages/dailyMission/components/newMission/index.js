@@ -2,22 +2,41 @@ import React, { useEffect } from "react";
 import "./index.scss";
 import moment from "moment";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
+import Form from "../../../components/form";
 import useTimer from "../../../useHook/useTimer";
 import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
 
 export default function(props) {
   // 这个还单纯吗？
-  const { getList } = props;
+  const { getList, newItem } = props;
   useEffect(() => {
     getList();
   }, [getList]);
+  const submitId = "newMission";
+  // 这块如何化简
   return (
     <div className="study-todo-list">
       <ButtonInputComponent
         {...props}
         postInputValue={props.newItem}
         buttonContent={"new item ^ ^"}
-      />
+        submitId={submitId}
+      >
+        <Form
+          submitId={submitId}
+          onSubmit={e => {
+            // 这块设计的还是怪怪的。 清空也不好做
+            newItem(e);
+          }}
+        >
+          <label>
+            content: <input name="content" />
+          </label>
+          <label>
+            timeInterval: <input name="timeInterval" />
+          </label>
+        </Form>
+      </ButtonInputComponent>
       <StudyTodoList {...props} />
     </div>
   );

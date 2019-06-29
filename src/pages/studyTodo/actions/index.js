@@ -17,7 +17,7 @@ const actions = {
   newStudyTodoItem: data => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
-      return server.newStudyTodoItem({ content: data }).then(res => {
+      return server.newStudyTodoItem(data).then(res => {
         dispatch({ type: "end ajax" });
         dispatch(actions.setList(res));
       });

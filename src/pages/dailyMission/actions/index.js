@@ -21,7 +21,8 @@ const actions = {
   newItem: data => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
-      return server.newItem({ content: data }).then(res => {
+      // 这块究竟些什么合适？
+      return server.newItem(data).then(res => {
         dispatch({ type: "end ajax" });
         dispatch(actions.setDailyMissionList(res));
       });
@@ -56,7 +57,6 @@ const actions = {
     };
   },
   changeMissionStatusByMissionId: (missionId, status) => {
-    console.log(missionId)
     return function(dispatch) {
       dispatch({ type: "start ajax" });
       return server

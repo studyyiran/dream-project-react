@@ -27,12 +27,10 @@ const actions = {
   postNewReview: data => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
-      const promise = studyReviewServer
-        .postNewReview({ reviewContent: data })
-        .then(res => {
-          dispatch({ type: "end ajax" });
-          dispatch(actions.setReviewList(res));
-        });
+      const promise = studyReviewServer.postNewReview(data).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setReviewList(res));
+      });
       return promise;
     };
   },
