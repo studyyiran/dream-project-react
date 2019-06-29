@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import Connect from "./connect";
-import StudyTodoList from "./components/studyTodoList";
+import NewMission from "./components/newMission";
+import TodayMission from "./components/todayMission";
 import Layout from "../components/layout";
 
 function Page(props) {
-  const { getList } = props;
-  useEffect(() => {
-    getList();
-  }, [getList]);
+  // 这边需要一个switch标签
   return (
     <Layout>
-      <StudyTodoList {...props} />
+      <NewMission {...props} />
+      <TodayMission {...props} />
     </Layout>
   );
 }

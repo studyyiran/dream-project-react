@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.scss";
 import moment from "moment";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import useTimer from "../../../useHook/useTimer";
-import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
 
 export default function(props) {
+  // 这个还单纯吗？
+  const { getTodayMissionList } = props;
+  useEffect(() => {
+    getTodayMissionList();
+  }, [getTodayMissionList]);
   return (
-    <div className="study-todo-list">
-      <ButtonInputComponent
-        {...props}
-        postInputValue={props.newItem}
-        buttonContent={"new item ^ ^"}
-      />
+    <div className="today-mission">
       <StudyTodoList {...props} />
     </div>
   );
 }
 
 function StudyTodoList(props) {
-  const { list = [] } = props;
+  const { todayMissionList = [] } = props;
   return (
     <div className="item">
-      {list.map(item => (
+      {todayMissionList.map(item => (
         <Item {...props} key={item._id} info={item} />
       ))}
     </div>
@@ -30,26 +29,38 @@ function StudyTodoList(props) {
 }
 
 function Item(props) {
-  const { info, changeStatus, hide } = props;
-  const { _id, createTime, content, status, startTime, continueSecond } = info;
+  const {
+    info,
+    changeMissionStatusByMissionId,
+    deleteTodayMissionStatus
+  } = props;
+  const {
+    _id,
+    createTime,
+    content,
+    status,
+    startTime,
+    continueSecond,
+    missionId
+  } = info;
   const isStart = status === "start";
   function startHandler() {
     // 开始
     if (status !== "finish" && status !== "start") {
-      changeStatus(_id, "start");
+      changeMissionStatusByMissionId(missionId, "start");
     }
   }
   function sureHandler() {
     // 完成
-    changeStatus(_id, "finish");
+    changeMissionStatusByMissionId(missionId, "finish");
   }
   function closeHandler() {
     if (isStart) {
       // 取消状态
-      changeStatus(_id, "stop");
+      changeMissionStatusByMissionId(missionId, "stop");
     } else {
       // 删除任务
-      hide(_id);
+      deleteTodayMissionStatus(missionId);
     }
   }
 
@@ -81,7 +92,7 @@ function Item(props) {
       closeCallBack={closeHandler}
     >
       <div
-        className="study-todo-item"
+        className="today-mission-item"
         data-status={status}
         onClick={startHandler}
       >

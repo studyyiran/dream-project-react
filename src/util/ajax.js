@@ -21,6 +21,17 @@ ajax.put = function(url, data) {
   });
 };
 
+ajax.delete = function(url, data) {
+  return ajax.fetch({
+    url,
+    method: "DELETE",
+    body: JSON.stringify(data),
+    headers: {
+      "content-type": "application/json"
+    }
+  });
+};
+
 ajax.get = function(url) {
   return ajax.fetch({
     url,

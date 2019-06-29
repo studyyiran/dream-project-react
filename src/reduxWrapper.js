@@ -5,10 +5,12 @@ import createLogger from "redux-logger";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import studyReviewReducers from "./reducers/studyReview";
 import studyTodoReducers from "./reducers/studyTodo";
+import dailyMissionReducers from "./reducers/dailyMission";
 
 const rootReducer = combineReducers({
   studyReviewReducers,
-  studyTodoReducers
+  studyTodoReducers,
+  dailyMissionReducers
 });
 
 const middleware = [thunk];

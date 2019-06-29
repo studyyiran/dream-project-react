@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.scss";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
-
+/*
+children可以定义左侧的内容。让它不仅仅是input
+ */
 export default function ButtonInputComponent(props) {
-  const { buttonContent, postInputValue } = props;
+  const { buttonContent, postInputValue, children } = props;
   const [isInput, setIsInput] = useState(false);
   const [inputValue, setInutValue] = useState("");
   const inputRef = useRef();
@@ -46,7 +48,11 @@ export default function ButtonInputComponent(props) {
     }
   }
   if (isInput) {
-    dom = <input ref={inputRef} value={inputValue} onChange={inputHandler} />;
+    if (children) {
+      dom = children;
+    } else {
+      dom = <input ref={inputRef} value={inputValue} onChange={inputHandler} />;
+    }
   } else {
     dom = (
       <button className={"new-button"} onClick={buttonHandler}>

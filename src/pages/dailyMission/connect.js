@@ -3,9 +3,8 @@ import actions from "./actions";
 
 export default function Connect(Page) {
   const mapState = state => {
-    const { studyTodoReducers } = state;
     return {
-      ...studyTodoReducers
+      ...state.dailyMissionReducers
     };
   };
   return connect(

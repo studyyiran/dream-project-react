@@ -1,0 +1,18 @@
+.today-mission {
+  margin-top: 30px;
+  .today-mission-item {
+    display: flex;
+    padding: 10px;
+    border: 1px solid red;
+  }
+  .today-mission-item[data-status='start'] {
+    background: red;
+  }
+  .today-mission-item[data-status='finish'] {
+    background: green;
+  }
+
+}
+
+
+

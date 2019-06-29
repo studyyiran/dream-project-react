@@ -1,28 +1,46 @@
 import ajax from "../../../util/ajax";
 const host = "http://localhost:3000";
-const localUrl = host + "/dailyMission/userDailyMission";
+const userDailyMissionUrl = host + "/dailyMission/newMission";
+const userTodayMissionUrl = host + "/dailyMission/userTodayMission";
 // 其实 server和actions 目前是11对应 也许并不一定耦合对应
 const server = {
   newItem: data => {
-    const url = localUrl + "/newItem";
+    const url = userDailyMissionUrl + "/newItem";
     // 不能为空
     if (Object.keys(data).every(item => data[item])) {
       return ajax.post(url, data);
     }
   },
   getList: () => {
-    const url = localUrl + "/getList";
+    const url = userDailyMissionUrl + "/getList";
     const result = ajax.get(url);
     return result;
   },
+
   hide: data => {
-    const url = localUrl + "/hide";
+    const url = userDailyMissionUrl + "/hide";
     const result = ajax.put(url, data);
     return result;
   },
   changeStatus: data => {
-    const url = localUrl + "/changeStatus";
+    const url = userDailyMissionUrl + "/changeStatus";
     const result = ajax.put(url, data);
+    return result;
+  },
+
+  getTodayMissionList: () => {
+    const url = userTodayMissionUrl + "/getList";
+    const result = ajax.get(url);
+    return result;
+  },
+  changeMissionStatusByMissionId: data => {
+    const url = userTodayMissionUrl + "/changeStatus";
+    const result = ajax.put(url, data);
+    return result;
+  },
+  deleteTodayMissionStatus: data => {
+    const url = userTodayMissionUrl + "/hide";
+    const result = ajax.post(url, data);
     return result;
   }
 };
