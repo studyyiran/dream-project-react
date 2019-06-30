@@ -9,6 +9,17 @@ const actions = {
     type: "setTodayMissionList",
     value
   }),
+  setHistoryMissionList: value => ({
+    type: "setHistoryMissionList",
+    value
+  }),
+  updateAllList: () => {
+    return function(dispatch) {
+      dispatch(actions.getList());
+      dispatch(actions.getTodayMissionList());
+      dispatch(actions.getHistoryMissionList());
+    };
+  },
   getList: () => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
@@ -56,23 +67,31 @@ const actions = {
       });
     };
   },
-  changeMissionStatusByMissionId: (missionId, status) => {
+  getHistoryMissionList: () => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
-      return server
-        .changeMissionStatusByMissionId({ missionId, status })
-        .then(res => {
-          dispatch({ type: "end ajax" });
-          dispatch(actions.setTodayMissionList(res));
-        });
+      server.getHistoryMissionList().then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.setHistoryMissionList(res));
+      });
     };
   },
-  deleteTodayMissionStatus: missionId => {
+  changeMissionStatusById: (id, status) => {
     return function(dispatch) {
       dispatch({ type: "start ajax" });
-      return server.deleteTodayMissionStatus({ missionId }).then(res => {
+      return server.changeMissionStatusById({ id, status }).then(res => {
         dispatch({ type: "end ajax" });
-        dispatch(actions.setTodayMissionList(res));
+        // 这边为什么永远要写diapatch
+        dispatch(actions.updateAllList());
+      });
+    };
+  },
+  deleteTodayMissionStatus: id => {
+    return function(dispatch) {
+      dispatch({ type: "start ajax" });
+      return server.deleteTodayMissionStatus({ id }).then(res => {
+        dispatch({ type: "end ajax" });
+        dispatch(actions.updateAllList());
       });
     };
   }

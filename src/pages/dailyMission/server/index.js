@@ -29,18 +29,23 @@ const server = {
   },
 
   getTodayMissionList: () => {
-    const url = userTodayMissionUrl + "/getList";
+    const url = userTodayMissionUrl + "/getTodayMissionList";
     const result = ajax.get(url);
     return result;
   },
-  changeMissionStatusByMissionId: data => {
+  getHistoryMissionList: () => {
+    const url = userTodayMissionUrl + "/getHistoryMissionList";
+    const result = ajax.get(url);
+    return result;
+  },
+  changeMissionStatusById: data => {
     const url = userTodayMissionUrl + "/changeStatus";
     const result = ajax.put(url, data);
     return result;
   },
   deleteTodayMissionStatus: data => {
     const url = userTodayMissionUrl + "/hide";
-    const result = ajax.post(url, data);
+    const result = ajax.delete(url, data);
     return result;
   }
 };

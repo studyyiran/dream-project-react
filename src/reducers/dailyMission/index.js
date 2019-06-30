@@ -6,6 +6,8 @@ export default function(state, action) {
       return { ...state, todayMissionList: value };
     case "setDailyMissionList":
       return { ...state, dailyMissionList: value };
+    case "setHistoryMissionList":
+      return { ...state, historyMissionList: value };
     default:
       return { ...state };
   }

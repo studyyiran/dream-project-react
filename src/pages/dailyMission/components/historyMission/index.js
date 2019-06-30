@@ -6,22 +6,22 @@ import useTimer from "../../../useHook/useTimer";
 
 export default function(props) {
   // 这个还单纯吗？
-  const { getTodayMissionList } = props;
+  const { getHistoryMissionList } = props;
   useEffect(() => {
-    getTodayMissionList();
-  }, [getTodayMissionList]);
+    getHistoryMissionList();
+  }, [getHistoryMissionList]);
   return (
-    <div className="today-mission">
+    <div className="history-mission">
       <StudyTodoList {...props} />
     </div>
   );
 }
 
 function StudyTodoList(props) {
-  const { todayMissionList = [] } = props;
+  const { historyMissionList = [] } = props;
   return (
     <div className="item">
-      {todayMissionList.map(item => (
+      {historyMissionList.map(item => (
         <Item {...props} key={item._id} info={item} />
       ))}
     </div>
@@ -88,7 +88,7 @@ function Item(props) {
       closeCallBack={closeHandler}
     >
       <div
-        className="today-mission-item"
+        className="history-mission-item"
         data-status={status}
         onClick={startHandler}
       >
