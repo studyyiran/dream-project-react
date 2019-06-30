@@ -48,7 +48,6 @@ ajax.fetch = function(config) {
   return new Promise((resolve, reject) => {
     fetch(url, otherConfig)
       .then(res => {
-        console.log(res);
         if (res.ok) {
           const result = res.json();
           resolve(result);
@@ -59,7 +58,6 @@ ajax.fetch = function(config) {
         }
       })
       .catch(e => {
-        console.log(e);
         console.error("网络故障，底层catch。network？404?");
         console.error(e);
       });

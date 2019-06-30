@@ -3,7 +3,6 @@ import server from "../../server";
 import React from "react";
 
 export default function List(props) {
-  console.log(props);
   const { list, addFunc } = props;
   const [value, setValue] = useState("");
   function buttonHandler(inputValue) {

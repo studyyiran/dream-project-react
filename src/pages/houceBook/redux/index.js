@@ -47,7 +47,6 @@ function List(props) {
 
 function reducer(preState, action = {}) {
   const { type, value } = action;
-  console.log(action);
   switch (type) {
     case "add":
       const { todoList } = preState;
@@ -71,7 +70,6 @@ export default function() {
   }
 
   function addAction(value) {
-    console.log(value);
     return store.dispatch({ type: "add", value });
   }
   const target2 = document.querySelector("#app2");

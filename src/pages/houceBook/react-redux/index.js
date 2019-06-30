@@ -8,12 +8,10 @@ import List from "./components";
 
 function reducer(preState, action = {}) {
   const { type, value } = action;
-  console.log(action);
   switch (type) {
     case "add":
       const { todoList } = preState;
       const arr = todoList.concat([value]);
-      console.log(arr);
       return { ...preState, todoList: arr };
     default:
       return preState;

@@ -94,7 +94,6 @@ function renderLine(list) {
     const buttonUpdate = tr.querySelector("[date-type=update]");
 
     buttonUpdate.addEventListener("click", () => {
-      console.log("test");
       const dom = formDom({
         submit: json => {
           reviewServer.updateReviewInfo({ ...json, id: _id });
@@ -168,7 +167,6 @@ function formDom(props) {
     newInput(item);
   });
   function newInput(item) {
-    console.log("new input");
     const { id, name } = item;
     const container = document.createElement("div");
     const label = document.createElement("label");

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Timer from "../../util/timer";
 
 export default function useTimer(status, time) {
-  console.log(time)
   const [timer, setTimer] = useState(0);
   const refTimer = useRef();
   // 这块为什么不能带time万？

@@ -3,7 +3,6 @@ import studyReviewActions from "./actions";
 
 export default function Connect(Page) {
   const mapState = state => {
-    console.log(state);
     const { studyReviewReducers, studyToDo } = state;
     return {
       ...studyReviewReducers
