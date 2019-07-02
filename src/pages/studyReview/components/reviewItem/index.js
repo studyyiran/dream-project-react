@@ -81,7 +81,7 @@ export default function ReviewItem(props) {
   return (
     <CloseAndSureContainer
       buttonContent={"submit"}
-      isShowClose={status !== "finish"}
+      isShowClose={true}
       isShowSure={isStart}
       sureCallBack={finishCallBack}
       closeCallBack={stopCallBack}

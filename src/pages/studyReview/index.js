@@ -15,6 +15,7 @@ function Page(props) {
   return (
     <Layout>
       <ReviewList {...props} />
+      {/*<ReviewList {...props} type={"noFinish"} />*/}
     </Layout>
   );
 }

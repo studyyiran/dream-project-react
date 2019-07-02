@@ -107,7 +107,7 @@ function Item(props) {
       <div
         className="study-todo-item"
         data-status={status}
-        onClick={startHandler}
+        // onClick={() => {}}
       >
         <div>创建时间：{moment(Number(createTime)).format()}</div>
         <p>内容：{content}</p>
