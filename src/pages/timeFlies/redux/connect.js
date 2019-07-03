@@ -4,7 +4,7 @@ import actions from "./actions";
 
 const stateMap = state => {
   return {
-    eventStreamList: state.eventStreamList
+    ...state.eventStreamReducers
   };
 };
 

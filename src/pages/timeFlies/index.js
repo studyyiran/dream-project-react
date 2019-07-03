@@ -5,7 +5,9 @@ import Layout from "../components/layout";
 
 function TimeFlies(props) {
   useEffect(() => {
-    server.getEventStreamList();
+    // 好怀念直接拿server but u cant
+    // server.getEventStreamList();
+    props.getEventStreamList();
   }, []);
   console.log(props);
   return (

@@ -6,11 +6,13 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import studyReviewReducers from "./reducers/studyReview";
 import studyTodoReducers from "./reducers/studyTodo";
 import dailyMissionReducers from "./reducers/dailyMission";
+import eventStreamReducers from "./reducers/eventStream";
 
 const rootReducer = combineReducers({
   studyReviewReducers,
   studyTodoReducers,
-  dailyMissionReducers
+  dailyMissionReducers,
+  eventStreamReducers
 });
 
 const middleware = [thunk];
