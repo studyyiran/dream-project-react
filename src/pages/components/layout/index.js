@@ -22,6 +22,11 @@ export default function(props) {
             dailyMission
           </NavLink>
         </li>
+        <li>
+          <NavLink activeClassName="active" to={"/timeFlies"}>
+            eventStream
+          </NavLink>
+        </li>
       </ul>
       <div>{children}</div>
     </div>
