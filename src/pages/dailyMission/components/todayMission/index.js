@@ -42,7 +42,7 @@ function Item(props) {
   const isStart = status === "start";
   function startHandler() {
     // 开始
-    if (status !== "finish" && status !== "start") {
+    if (status !== "start") {
       changeMissionStatusById(_id, "start");
     }
   }
