@@ -11,9 +11,15 @@ const heightDistance = 3;
 const topHeight = 45;
 const defaultLineHeight = 363 - topHeight;
 const bgColorArr = ["#E1F3FF", "#FFF3E3", "#E7F3E7", "#E4E1FF", "#FFE3E9"];
+const minInterval = "m";
 /*
 props:
-  taskInfo
+  list: [
+    attr: {
+      name:
+      content:
+    }
+  ]
  */
 export default class extends React.Component {
   constructor(props) {
@@ -27,135 +33,147 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.taskInfo && this.props.taskInfo.attr) {
-    //   this.init(this.props.taskInfo);
-    // }
+    if (this.props.list && this.props.list.length) {
+      this.init(this.props.list);
+    }
   }
 
   componentDidUpdate(prev) {
-    // if (this.props.taskInfo !== prev.taskInfo) {
-    //   this.init(this.props.taskInfo);
-    // }
+    if (
+      this.props.list &&
+      this.props.list.length &&
+      this.props.list !== prev.list
+    ) {
+      this.init(this.props.list);
+    }
   }
 
-  // dateToRender(start, end, item) {
-  //   start = moment(start);
-  //   // 数据定义为，起始时间的0点和终止时间的23.59分。因此endTime需要+1
-  //   end = this.formatEndTime(end);
-  //   // end = moment(end)
-  //   let length = end.diff(start, "day");
-  //   let posX = start.diff(minDate, "day");
-  //   let posY = this.getYPos(posX, length);
-  //   return this.renderPoint(posX, posY, length, item);
-  // }
+  dateToRender(start, end, item) {
+    start = moment(start);
+    // 数据定义为，起始时间的0点和终止时间的23.59分。因此endTime需要+1
+    // end = this.formatEndTime(end);
+    end = moment(end);
+    let length = end.diff(start, minInterval);
+    console.log(length);
+    let posX = start.diff(minDate, minInterval);
+    console.log(length);
+    let posY = this.getYPos(posX, length);
+    return this.renderPoint(posX, posY, length, item);
+  }
 
   formatEndTime(time) {
-    return moment(time)
-    // return moment(time).add(1, "d");
+    return moment(time).add(1, "d");
   }
 
-  // renderPoint(posX, posY, length, item) {
-  //   // 填充cell
-  //   for (let i = 0; i < length; i++) {
-  //     if (!this.cellArr[posY] || !this.cellArr[posY].length) {
-  //       this.cellArr[posY] = [];
-  //     }
-  //     this.cellArr[posY][posX + i] = true;
-  //   }
-  //
-  //   let styleContainer = {
-  //     left: perBlockWidth * posX + widthDistance,
-  //     top: (perBlockHeight + heightDistance) * posY
-  //   };
-  //   let style = {
-  //     maxWidth: perBlockWidth * length - 2 * widthDistance,
-  //     width: perBlockWidth * length - 2 * widthDistance,
-  //     height: perBlockHeight,
-  //     background: bgColorArr[this.currentColor % bgColorArr.length]
-  //   };
-  //   const dialogLeft = style.width / 4;
-  //   this.currentColor++;
-  //   return (
-  //     <div
-  //       key={item && item.attr && item.attr.name}
-  //       onMouseEnter={() => {
-  //         this.setState(
-  //           {
-  //             showDialog: item
-  //           },
-  //           () => {
-  //             const otherHeight = 85;
-  //             let currentHeight =
-  //               otherHeight +
-  //               this.heightRef.current.clientHeight +
-  //               this.heightRef.current.parentElement.offsetTop;
-  //             if (currentHeight > this.state.lineHeight) {
-  //               this.setState({
-  //                 lineHeight: currentHeight
-  //               });
-  //             } else if (currentHeight < defaultLineHeight) {
-  //               this.setState({
-  //                 lineHeight: defaultLineHeight
-  //               });
-  //             }
-  //           }
-  //         );
-  //       }}
-  //       onMouseLeave={() => {
-  //         this.setState({
-  //           lineHeight: defaultLineHeight,
-  //           showDialog: {}
-  //         });
-  //       }}
-  //       style={styleContainer}
-  //       className="x-container"
-  //     >
-  //       <div className="center-flex" style={style}>
-  //         <div className="item-block zao-line-clamp">
-  //           {item && item.attr && item.attr.name}
-  //         </div>
-  //       </div>
-  //       {this.renderDialog(item && item.attr && item.attr.name, dialogLeft)}
-  //     </div>
-  //   );
-  // }
+  renderPoint(posX, posY, length, item) {
+    // 填充cell
+    for (let i = 0; i < length; i++) {
+      if (!this.cellArr[posY] || !this.cellArr[posY].length) {
+        this.cellArr[posY] = [];
+      }
+      this.cellArr[posY][posX + i] = true;
+    }
+
+    let styleContainer = {
+      left: perBlockWidth * posX + widthDistance,
+      top: (perBlockHeight + heightDistance) * posY
+    };
+    let style = {
+      maxWidth: perBlockWidth * length - 2 * widthDistance,
+      width: perBlockWidth * length - 2 * widthDistance,
+      height: perBlockHeight,
+      background: bgColorArr[this.currentColor % bgColorArr.length]
+    };
+    const dialogLeft = style.width / 4;
+    this.currentColor++;
+    return (
+      <div
+        key={item && item.attr && item.attr.name}
+        // onMouseEnter={() => {
+        //   this.setState(
+        //     {
+        //       showDialog: item
+        //     },
+        //     () => {
+        //       const otherHeight = 85;
+        //       let currentHeight =
+        //         otherHeight +
+        //         this.heightRef.current.clientHeight +
+        //         this.heightRef.current.parentElement.offsetTop;
+        //       if (currentHeight > this.state.lineHeight) {
+        //         this.setState({
+        //           lineHeight: currentHeight
+        //         });
+        //       } else if (currentHeight < defaultLineHeight) {
+        //         this.setState({
+        //           lineHeight: defaultLineHeight
+        //         });
+        //       }
+        //     }
+        //   );
+        // }}
+        // onMouseLeave={() => {
+        //   this.setState({
+        //     lineHeight: defaultLineHeight,
+        //     showDialog: {}
+        //   });
+        // }}
+        style={styleContainer}
+        className="x-container"
+      >
+        <div className="center-flex" style={style}>
+          <div className="item-block zao-line-clamp">
+            {item && item.attr && item.attr.name}
+          </div>
+        </div>
+        {/*{this.renderDialog(item && item.attr && item.attr.name, dialogLeft)}*/}
+      </div>
+    );
+  }
 
   // 需要先按照起始日起进行排序。相同日期不做处理。
   // 然后根据排序后的进行绘制
-  // getYPos(posX, length) {
-  //   // 默认从最上面开始搞
-  //   let posY = 0;
-  //   let findPosY = false;
-  //   while (!findPosY) {
-  //     findPosY = true;
-  //     for (let i = posX; i < posX + length; i++) {
-  //       if (
-  //         this.cellArr &&
-  //         this.cellArr.length &&
-  //         this.cellArr[posY] &&
-  //         this.cellArr[posY][i]
-  //       ) {
-  //         findPosY = false;
-  //       }
-  //     }
-  //     if (!findPosY) {
-  //       posY++;
-  //     }
-  //   }
-  //
-  //   return posY;
-  //   // if (false) {
-  //   //     posY++
-  //   // } else {
-  //   //     renderAt(posX, posY, length)
-  //   // }
-  // }
+  getYPos(posX, length) {
+    // 默认从最上面开始搞
+    let posY = 0;
+    let findPosY = false;
+    while (!findPosY) {
+      findPosY = true;
+      for (let i = posX; i < posX + length; i++) {
+        if (
+          this.cellArr &&
+          this.cellArr.length &&
+          this.cellArr[posY] &&
+          this.cellArr[posY][i]
+        ) {
+          findPosY = false;
+        }
+      }
+      if (!findPosY) {
+        posY++;
+      }
+    }
 
-  init(item) {
-    let startDate = item.attr.startTime;
-    let endDate = item.attr.endTime;
-    minDate = moment(startDate);
-    maxDate = moment(endDate);
+    return posY;
+    // if (false) {
+    //     posY++
+    // } else {
+    //     renderAt(posX, posY, length)
+    // }
+  }
+
+  init(list) {
+    console.log("init");
+    minDate = moment()
+      .subtract(1, `days`)
+      .hour(10)
+      .minutes(0)
+      .seconds(0);
+    maxDate = moment()
+      .subtract(1, `days`)
+      .hour(24)
+      .minutes(59)
+      .seconds(59);
     this.setState({
       canRender: true
     });
@@ -183,6 +201,7 @@ export default class extends React.Component {
   //   }
   // }
   render() {
+    console.log(this.props);
     this.currentColor = 0;
     this.cellArr = [];
     if (
@@ -213,11 +232,11 @@ export default class extends React.Component {
               <RenderDateAndDay />
               <RenderLine />
             </div>
-            {/*<div className="item-container">*/}
-            {/*{propsArray.map(item =>*/}
-            {/*this.dateToRender(item.attr.startTime, item.attr.endTime, item)*/}
-            {/*)}*/}
-            {/*</div>*/}
+            <div className="item-container">
+              {this.props.list.map(item =>
+                this.dateToRender(item.attr.startTime, item.attr.endTime, item)
+              )}
+            </div>
           </div>
         </div>
       );
@@ -230,9 +249,11 @@ export default class extends React.Component {
 function RenderTitleBlock(props) {
   const { item } = props;
   let start = moment(item.attr.stageStartTime);
-  let end = this.formatEndTime(item.attr.stageEndTime);
-  let length = end.diff(start, "day");
-  let posX = start.diff(minDate, "day");
+  let end = moment(item.attr.stageEndTime);
+  let length = end.diff(start, minInterval);
+  console.log(length);
+  let posX = start.diff(minDate, minInterval);
+  console.log(posX);
   const titleHeight = 22;
   let style = {
     width: perBlockWidth * length - perBlockWidth,
@@ -259,28 +280,23 @@ function RenderTitleBlock(props) {
   );
 }
 
-function RenderLine() {
+function RenderLine(props) {
+  const { lineHeight } = props;
   let now = moment(minDate);
   let arr = [];
   let style = {};
   let posX = 0;
   const lineWidth = 2;
-  while (
-    now.isBefore(
-      moment(maxDate)
-        .add(1, "d")
-        .add(1, "hour")
-    )
-  ) {
+  while (now.isBefore(moment(maxDate).add(1, minInterval))) {
     style = {
       left: perBlockWidth * posX - lineWidth / 2
     };
     arr.push(<div key={posX} style={style} className="line" />);
     posX++;
-    now.add(1, "day");
+    now.add(1, minInterval);
   }
   return (
-    <div style={{ height: this.state.lineHeight }} className="line-container">
+    <div style={{ height: lineHeight }} className="line-container">
       {arr}
     </div>
   );
@@ -290,7 +306,9 @@ function RenderDateAndDay() {
   let now = moment(minDate);
   let arr = [];
   let index = 0;
-  while (now.isBefore(moment(maxDate).add(1, "hour"))) {
+  console.log(now.format());
+  console.log(maxDate.format());
+  while (now.isBefore(moment(maxDate).add(1, minInterval))) {
     let isWeek = false;
     let isToday = false;
     let isFirstDay = false;
@@ -345,14 +363,14 @@ function RenderDateAndDay() {
     arr.push(
       <div key={index++}>
         <div style={dateStyle} className="block date-block center-flex">
-          <div style={isTodayStyle}>{now.date()}</div>
+          <div style={isTodayStyle}>{now.format("HH")}</div>
         </div>
         <span style={dayStyle} className="block day-block center-flex">
-          {now.format("hh")}
+          {now.format("mm")}
         </span>
       </div>
     );
-    now.add(1, "hour");
+    now.add(1, minInterval);
   }
   return <div className="flex">{arr}</div>;
 }

@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import studyReviewReducers from "./reducers/studyReview";
 import studyTodoReducers from "./reducers/studyTodo";
 import dailyMissionReducers from "./reducers/dailyMission";
-import eventStreamReducers from "./reducers/eventStream";
+import eventStreamReducers from "./pages/timeFlies/redux/reducer";
 
 const rootReducer = combineReducers({
   studyReviewReducers,

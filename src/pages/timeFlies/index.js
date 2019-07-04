@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import connect from "./redux/connect";
 import Layout from "../components/layout";
+import RenderList from "./components/renderList";
 
 function TimeFlies(props) {
-  const { getEventStreamList } = props;
+  const { getEventStreamList, eventStreamList } = props;
   useEffect(() => {
     // 好怀念直接拿server but u cant
     // server.getEventStreamList();
@@ -11,7 +12,7 @@ function TimeFlies(props) {
   }, [getEventStreamList]);
   return (
     <Layout>
-      <div>123</div>;
+      <RenderList eventStreamList={eventStreamList} />
     </Layout>
   );
 }

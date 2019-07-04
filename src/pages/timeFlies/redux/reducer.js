@@ -5,7 +5,7 @@ export default function(prevState, actions) {
     case "getEventStreamList":
       return { ...prevState };
     case "setEventStreamList":
-      console.log('get set')
+      console.log("get set");
       return {
         ...prevState,
         eventStreamList: value
