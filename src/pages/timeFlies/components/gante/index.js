@@ -4,7 +4,7 @@ import moment from "moment";
 
 let minDate;
 let maxDate;
-const perBlockWidth = 48;
+const perBlockWidth = 4.8 * 1;
 const perBlockHeight = 24;
 const widthDistance = 1;
 const heightDistance = 3;
@@ -54,9 +54,9 @@ export default class extends React.Component {
     // end = this.formatEndTime(end);
     end = moment(end);
     let length = end.diff(start, minInterval);
-    console.log(length);
+    // console.log(length);
     let posX = start.diff(minDate, minInterval);
-    console.log(length);
+    // console.log(length);
     let posY = this.getYPos(posX, length);
     return this.renderPoint(posX, posY, length, item);
   }
@@ -88,7 +88,7 @@ export default class extends React.Component {
     this.currentColor++;
     return (
       <div
-        key={item && item.attr && item.attr.name}
+        key={item && item.attr && item.attr._id}
         // onMouseEnter={() => {
         //   this.setState(
         //     {
@@ -163,7 +163,7 @@ export default class extends React.Component {
   }
 
   init(list) {
-    console.log("init");
+    // console.log("init");
     minDate = moment()
       .subtract(1, `days`)
       .hour(10)
@@ -201,7 +201,7 @@ export default class extends React.Component {
   //   }
   // }
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     this.currentColor = 0;
     this.cellArr = [];
     if (
@@ -225,7 +225,12 @@ export default class extends React.Component {
           >
             <div className="title-container">
               {this.props.list.map(item => {
-                return <RenderTitleBlock item={item} />;
+                return (
+                  <RenderTitleBlock
+                    item={item}
+                    key={item && item.attr && item.attr._id}
+                  />
+                );
               })}
             </div>
             <div className="date-container">
@@ -251,9 +256,9 @@ function RenderTitleBlock(props) {
   let start = moment(item.attr.stageStartTime);
   let end = moment(item.attr.stageEndTime);
   let length = end.diff(start, minInterval);
-  console.log(length);
+  // console.log(length);
   let posX = start.diff(minDate, minInterval);
-  console.log(posX);
+  // console.log(posX);
   const titleHeight = 22;
   let style = {
     width: perBlockWidth * length - perBlockWidth,
@@ -264,7 +269,7 @@ function RenderTitleBlock(props) {
   };
   return (
     <div
-      key={item && item.attr && item.attr.name}
+      key={item && item.attr && item.attr._id}
       style={style}
       className="title-block"
     >
@@ -306,8 +311,8 @@ function RenderDateAndDay() {
   let now = moment(minDate);
   let arr = [];
   let index = 0;
-  console.log(now.format());
-  console.log(maxDate.format());
+  // console.log(now.format());
+  // console.log(maxDate.format());
   while (now.isBefore(moment(maxDate).add(1, minInterval))) {
     let isWeek = false;
     let isToday = false;
@@ -324,7 +329,9 @@ function RenderDateAndDay() {
     //   // 每月首日
     //   isWeek = true;
     // }
-    let dateStyle = {};
+    let dateStyle = {
+      width: perBlockWidth
+    };
     if (isWeek) {
       dateStyle = Object.assign({}, dateStyle, {
         fontWeight: "600",
@@ -339,7 +346,9 @@ function RenderDateAndDay() {
         borderRadius: "50%"
       });
     }
-    let dayStyle = {};
+    let dayStyle = {
+      width: perBlockWidth
+    };
     if (isWeek || isToday) {
       dayStyle = Object.assign({}, dayStyle, {
         fontWeight: "600",
@@ -360,14 +369,28 @@ function RenderDateAndDay() {
       dayStyle = Object.assign({}, dayStyle, { color: "#F11815" });
     }
 
+    const checkiSFirstMintue = time => {
+      // 除了format之后，进行比较，还有没有更优雅的方式。
+      const result =
+        moment(time).format("mm") === "00" ||
+        moment(time).format("mm") === "30";
+      return result;
+    };
+
+    const displayTime = checkiSFirstMintue(now) ? now.format("HH:mm") : "";
+    if (displayTime) {
+      console.log("enter");
+      console.log(now.format("MM-DD HH-mm-ss"));
+    }
+
     arr.push(
       <div key={index++}>
         <div style={dateStyle} className="block date-block center-flex">
-          <div style={isTodayStyle}>{now.format("HH")}</div>
+          <div style={isTodayStyle}>{displayTime}</div>
         </div>
-        <span style={dayStyle} className="block day-block center-flex">
-          {now.format("mm")}
-        </span>
+        {/*<span style={dayStyle} className="block day-block center-flex">*/}
+        {/*{now.format("mm")}*/}
+        {/*</span>*/}
       </div>
     );
     now.add(1, minInterval);

@@ -64,7 +64,7 @@ function renderLine(list) {
     tr.setAttribute("data-status", status);
     const deadLineDate = moment().add(totalReviewNeedTime, "d");
     tr.innerHTML = `
-        <th>${moment(Number(createTime)).format("MM-DD hh:mm:ss  ")}</th>
+        <th>${moment(Number(createTime)).format("MM-DD HH:mm:ss  ")}</th>
         <th>${reviewContent}</th>
         <th>${moment(Number(createTime)).to(deadLineDate)}</th>
         <th>${haveReviewCount}/${needReviewCount}</th>

@@ -91,7 +91,7 @@ export default function ReviewItem(props) {
         className="review-item"
         onClick={startReviewHandler}
       >
-        <span>{moment(Number(createTime)).format("MM-DD hh:mm:ss")}</span>
+        <span>{moment(Number(createTime)).format("MM-DD HH:mm:ss")}</span>
         <p>{reviewContent}</p>
         <span>{renderDeadLineTime()}</span>
         <span>{renderTimer()}</span>
