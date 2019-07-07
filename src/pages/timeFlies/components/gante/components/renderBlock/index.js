@@ -57,8 +57,8 @@ function RenderBlock(props) {
       style={styleContainer}
       className="x-container"
     >
-      <div className="center-flex" style={style}>
-        <div className="item-block zao-line-clamp">{content}</div>
+      <div className="center-flex zao-line-clamp item-block" style={style}>
+        {content}
       </div>
       {/*{RenderDialog(item && item.attr && item.attr.name, dialogLeft)}*/}
     </div>

@@ -22,14 +22,16 @@ props:
 
 export default function(props) {
   const { list = [] } = props;
-  const [startTime, setStartTime] = useState(moment().subtract(1, "day"));
+  const [rangeStartTime, setRangeStartTime] = useState(
+    moment().subtract(3, "day")
+  );
   const [endTime, setEndTime] = useState(moment());
   return (
     <div>
       <RangeSelect />
       <RenderGanteContainer
         list={list.filter(item => {
-          return moment(item.attr.startTime).isSame(startTime, "day");
+          return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
         })}
       />
     </div>
@@ -49,18 +51,18 @@ function RangeSelect() {
 
 function RenderGanteContainer(props) {
   const { list = [] } = props;
-  console.log(list);
   if (list && list.length) {
     // 决定了主向量的单位长度
     const unitStretch = 4.8;
     const minInterval = "m";
     const type = "vertical";
-    const startCalcTime = moment(list[0].attr.startTime)
+    // const type = "horizontal";
+    const startCalcTime = moment(list[0].attr.eventStartTime)
       .clone()
       .minute(0);
     return (
-      <div className="gante-container">
-        <div className="date-container">
+      <div className={`${type} gante-container`}>
+        <div className={`${type} date-container`}>
           <RenderDateBlockArr
             unitStretch={unitStretch}
             minInterval={minInterval}
@@ -69,7 +71,7 @@ function RenderGanteContainer(props) {
             timeRenderInterval={30}
           />
         </div>
-        <div className="item-container">
+        <div className={`${type} item-container`}>
           <RenderContentBlockArr
             unitStretch={unitStretch}
             list={getModal(list, minInterval, startCalcTime)}
@@ -102,7 +104,10 @@ function RenderDateBlockArr(props) {
     .minute(59);
   let arr = [];
   const value = unitStretch * timeRenderInterval;
-  let style = type === "vertical" ? { height: value } : { width: value };
+  let style =
+    type === "vertical"
+      ? { height: value }
+      : { minWidth: value, maxWidth: value };
   while (moment(timeNow).isBefore(timeEnd)) {
     timeNow.add(timeRenderInterval, minInterval);
     arr.push(
@@ -120,7 +125,7 @@ function RenderDateBlockArr(props) {
 function DateBlock(props) {
   const { content, style } = props;
   return (
-    <div className="date-container" style={style}>
+    <div className="date-block-container" style={style}>
       {content}
     </div>
   );
@@ -133,16 +138,17 @@ function getModal(list = [], minInterval, startCalcTime) {
   const getWidthPos = getCell()(1);
   return list.map(item => {
     const { attr } = item;
-    let { startTime, endTime } = attr;
-    startTime = moment(startTime);
-    endTime = moment(endTime);
+    let { eventStartTime, eventEndTime } = attr;
+    eventStartTime = moment(eventStartTime);
+    eventEndTime = moment(eventEndTime);
     attr.posInfo = {
-      timeStart: startTime.diff(startCalcTime, minInterval),
-      timeEnd: endTime.diff(startCalcTime, minInterval),
-      contentPos: getWidthPos(attr.timeStart, attr.timeEnd)
+      startTimePos: eventStartTime.diff(startCalcTime, minInterval),
+      endTimePos: eventEndTime.diff(startCalcTime, minInterval)
     };
-    console.log(startTime);
-    console.log(startCalcTime);
+    attr.posInfo.contentPos = getWidthPos(
+      attr.posInfo.startTimePos,
+      attr.posInfo.endTimePos
+    );
     return item;
   });
 
@@ -197,12 +203,17 @@ function RenderContentBlockArr(props) {
   const { list = [], unitStretch, unitContent, type = "vertical" } = props;
   return list.map(item => {
     const { attr } = item;
-    console.log(attr.posInfo);
-    const { contentPos, timeStart, timeEnd, contentSpace = 1 } = attr.posInfo;
+    const {
+      contentPos,
+      startTimePos,
+      endTimePos,
+      contentSpace = 1
+    } = attr.posInfo;
     const { content, _id } = attr;
-    const stretchLength = unitStretch * (timeEnd - timeStart);
+    const { eventStartTime, eventEndTime } = attr;
+    const stretchLength = unitStretch * (endTimePos - startTimePos);
     const contentLength = unitContent * contentSpace;
-    const stretchPosWithUnit = timeStart * unitStretch;
+    const stretchPosWithUnit = startTimePos * unitStretch;
     const contentPosWithUnit = contentPos * unitContent;
     let posX, posY, width, height;
     if (type === "vertical") {
@@ -210,20 +221,16 @@ function RenderContentBlockArr(props) {
       posY = stretchPosWithUnit;
       width = contentLength;
       height = stretchLength;
-    } else if (type === "h") {
+    } else if (type === "horizontal") {
       posX = stretchPosWithUnit;
       posY = contentPosWithUnit;
       width = stretchLength;
       height = contentLength;
     }
-    console.log(posX);
-    console.log(posY);
-    console.log(width);
-    console.log(height);
     return (
       <RenderBlock
         key={_id}
-        content={content}
+        content={content + eventStartTime + eventEndTime}
         posX={posX}
         posY={posY}
         width={width}

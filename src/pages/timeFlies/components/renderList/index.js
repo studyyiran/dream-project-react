@@ -10,18 +10,16 @@ export default function(props) {
       <Gante
         list={(eventStreamList || [])
           .map(item => {
-            const startTime = moment(item.createTime)
+            const eventStartTime = moment(item.createTime)
               .subtract(item.duration, "ms")
               .format();
-            const endTime = item.createTime;
+            const eventEndTime = item.createTime;
             return {
               attr: {
                 ...item,
                 name: item.content,
-                startTime,
-                endTime,
-                stageStartTime: startTime,
-                stageEndTime: endTime
+                eventStartTime,
+                eventEndTime
               }
             };
           })
