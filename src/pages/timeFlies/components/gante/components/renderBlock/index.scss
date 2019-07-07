@@ -1,0 +1,16 @@
+.x-container {
+  position: absolute;
+  box-sizing: border-box;
+  .center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .item-block {
+      overflow: hidden;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      color: rgba(51, 51, 51, 1);
+      /*position: absolute;*/
+    }
+  }
+}

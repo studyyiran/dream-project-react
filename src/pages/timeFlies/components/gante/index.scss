@@ -1,132 +1,17 @@
-.gante-out-container {
-  padding: 5px;
-  border-radius: 10px;
-  ::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
+.gante-container {
+  display: flex;
+  .date-container {
+    flex: 0 0 100px
   }
-  .gante-container {
-    padding: 5px;
-    //height: 400px;
-    background: white;
-    overflow: scroll;
-    .flex {
-      display: flex;
-    }
-    .block {
-      display: inline-block;
-    }
-    .center-flex {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .date-block {
-      height: 20px;
-      font-size: 16px;
-      font-weight: 500;
-      color: rgba(102, 102, 102, 1);
-      div {
-        width: 24px;
-        height: 24px;
-        line-height: 24px;
-        text-align: center;
-      }
-    }
-    .day-block {
-      height: 20px;
-      font-size: 14px;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-    }
-    .item-block {
-      overflow: hidden;
-      font-size: 14px;
-      font-family: PingFangSC-Regular;
-      color: rgba(51, 51, 51, 1);
-      /*position: absolute;*/
-    }
-    .title-container {
-      position: relative;
-      height: 30px;
-      .title-block {
-        position: absolute;
-        display: flex;
-        align-items: flex-end;
-        .title {
-          cursor: default;
-          font-size: 16px;
-          color: rgba(102, 102, 102, 1);
-          margin: 0 12px;
-        }
-        .inner-line {
-          flex: 1;
-          border-top: 1px solid rgba(151, 151, 151, 0.3);
-          min-width: 5px;
-        }
-        .left {
-          border-left: 1px solid rgba(151, 151, 151, 0.3);
-        }
-        .right {
-          border-right: 1px solid rgba(151, 151, 151, 0.3);
-        }
-      }
-    }
-
-    .date-container {
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .item-container {
-      position: relative;
-    }
-    .dialog {
-      padding: 20px;
-      position: absolute;
-      top: 25px;
-      left: 5px;
-      z-index: 10;
-      width: 360px;
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.08);
-      border-radius: 4px;
-      line-height: 24px;
-      li {
-        list-style-type: disc;
-        font-size: 14px;
-        color: rgba(102, 102, 102, 1);
-      }
-    }
-    .x-container {
-      position: absolute;
-    }
-
-    .zao-line-clamp {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      /* autoprefixer: off */
-      -webkit-box-orient: vertical;
-      /* autoprefixer: on */
-    }
-
-    .zao-font-normal {
-      word-wrap: break-word;
-      word-break: break-all;
-    }
-    .line-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      .line {
-        position: absolute;
-        border-left: 0.5px dashed rgba(151, 151, 151, 0.3);
-        border-right: 0.5px dashed rgba(151, 151, 151, 0.3);
-        height: 100%;
-        top: 0;
-      }
-    }
+  .item-container {
+    position: relative;
+    flex: 1 0 0;
   }
+}
+.gante-container .vertical {
+}
+
+.date-container {
+  box-sizing: border-box;
+  border: 1px solid red;
 }

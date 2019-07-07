@@ -1,3 +1,17 @@
 p {
   margin: 0;
 }
+.zao-line-clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /* autoprefixer: off */
+  -webkit-box-orient: vertical;
+  /* autoprefixer: on */
+}
+
+.zao-font-normal {
+  word-wrap: break-word;
+  word-break: break-all;
+}

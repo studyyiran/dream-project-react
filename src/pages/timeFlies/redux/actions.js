@@ -22,9 +22,9 @@ const actions = {
         dispatch({
           type: "endAjax"
         });
-        console.log('get set')
+        console.log("get set");
         // 这个dispatch很容易遗忘
-        dispatch(actions.setEventStreamList(value))
+        dispatch(actions.setEventStreamList(value));
       });
       return p1;
     };
