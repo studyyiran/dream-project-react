@@ -13,4 +13,21 @@
       /*position: absolute;*/
     }
   }
+  .dialog {
+    padding: 20px;
+    position: absolute;
+    top: 25px;
+    left: 5px;
+    z-index: 10;
+    width: 360px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    line-height: 24px;
+    li {
+      list-style-type: disc;
+      font-size: 14px;
+      color: rgba(102, 102, 102, 1);
+    }
+  }
 }

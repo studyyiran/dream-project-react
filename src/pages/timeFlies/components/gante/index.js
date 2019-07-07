@@ -1,69 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.scss";
 import moment from "moment";
-import RenderBlock from "./components/renderBlock";
-
-let maxDate;
-/*
-props:
-  list: [
-    attr: {
-      name:
-      content:
-    }
-  ]
- */
-
-/*
-样式定制
-横竖屏。
-基本参数。
- */
-
-export default function(props) {
-  const { list = [] } = props;
-  const [rangeStartTime, setRangeStartTime] = useState(
-    moment().subtract(3, "day")
-  );
-  const [endTime, setEndTime] = useState(moment());
-  return (
-    <div>
-      <RangeSelect />
-      <RenderGanteContainer
-        list={list.filter(item => {
-          return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
-        })}
-      />
-    </div>
-  );
-}
-
-function RangeSelect() {
-  return <div>RangeSelect</div>;
-}
-
+import DateBlockArr from "./components/dateBlockArr";
+import ContentBlockArr from "./components/contentBlockArr";
 /*
 负责：
+  ganteConfig: {
   unitStretch 时间轴上的单位长度
   minInterval 最小时间精度
   type 展示的方式（vertical）
+  }
+样式定制
+横竖屏。
+基本参数
  */
-
-function RenderGanteContainer(props) {
-  const { list = [] } = props;
+export default function RenderGanteContainer(props) {
+  const { list = [], ganteConfig } = props;
+  const { type, minInterval, unitStretch } = ganteConfig;
   if (list && list.length) {
-    // 决定了主向量的单位长度
-    const unitStretch = 4.8;
-    const minInterval = "m";
-    const type = "vertical";
-    // const type = "horizontal";
     const startCalcTime = moment(list[0].attr.eventStartTime)
       .clone()
       .minute(0);
     return (
       <div className={`${type} gante-container`}>
         <div className={`${type} date-container`}>
-          <RenderDateBlockArr
+          <DateBlockArr
             unitStretch={unitStretch}
             minInterval={minInterval}
             startCalcTime={startCalcTime}
@@ -72,7 +33,7 @@ function RenderGanteContainer(props) {
           />
         </div>
         <div className={`${type} item-container`}>
-          <RenderContentBlockArr
+          <ContentBlockArr
             unitStretch={unitStretch}
             list={getModal(list, minInterval, startCalcTime)}
             type={type}
@@ -84,51 +45,6 @@ function RenderGanteContainer(props) {
   } else {
     return null;
   }
-}
-
-/*
-传入两个时间，转成moment
- */
-function RenderDateBlockArr(props) {
-  let {
-    type,
-    startCalcTime,
-    minInterval,
-    unitStretch,
-    timeRenderInterval
-  } = props;
-  let timeNow = startCalcTime.clone();
-  let timeEnd = startCalcTime
-    .clone()
-    .hour(23)
-    .minute(59);
-  let arr = [];
-  const value = unitStretch * timeRenderInterval;
-  let style =
-    type === "vertical"
-      ? { height: value }
-      : { minWidth: value, maxWidth: value };
-  while (moment(timeNow).isBefore(timeEnd)) {
-    timeNow.add(timeRenderInterval, minInterval);
-    arr.push(
-      <DateBlock
-        style={style}
-        unitStretch={unitStretch}
-        key={timeNow.format("HH:mm")}
-        content={timeNow.format("HH:mm")}
-      />
-    );
-  }
-  return arr;
-}
-
-function DateBlock(props) {
-  const { content, style } = props;
-  return (
-    <div className="date-block-container" style={style}>
-      {content}
-    </div>
-  );
 }
 
 /*
@@ -192,50 +108,4 @@ function getModal(list = [], minInterval, startCalcTime) {
       };
     };
   }
-}
-
-/*
-根据坐标，进行渲染。
-传入相对坐标，计算出绝对坐标，和绝对大小
- */
-
-function RenderContentBlockArr(props) {
-  const { list = [], unitStretch, unitContent, type = "vertical" } = props;
-  return list.map(item => {
-    const { attr } = item;
-    const {
-      contentPos,
-      startTimePos,
-      endTimePos,
-      contentSpace = 1
-    } = attr.posInfo;
-    const { content, _id } = attr;
-    const { eventStartTime, eventEndTime } = attr;
-    const stretchLength = unitStretch * (endTimePos - startTimePos);
-    const contentLength = unitContent * contentSpace;
-    const stretchPosWithUnit = startTimePos * unitStretch;
-    const contentPosWithUnit = contentPos * unitContent;
-    let posX, posY, width, height;
-    if (type === "vertical") {
-      posX = contentPosWithUnit;
-      posY = stretchPosWithUnit;
-      width = contentLength;
-      height = stretchLength;
-    } else if (type === "horizontal") {
-      posX = stretchPosWithUnit;
-      posY = contentPosWithUnit;
-      width = stretchLength;
-      height = contentLength;
-    }
-    return (
-      <RenderBlock
-        key={_id}
-        content={content + eventStartTime + eventEndTime}
-        posX={posX}
-        posY={posY}
-        width={width}
-        height={height}
-      />
-    );
-  });
 }

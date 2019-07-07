@@ -1,33 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import Gante from "../gante";
 import moment from "moment";
-
+/*
+props:
+  list: [
+    attr: {
+      name:
+      content:
+    }
+  ]
+ */
 export default function(props) {
   const { eventStreamList } = props;
+  const [rangeStartTime, setRangeStartTime] = useState(
+    moment().subtract(2, "day")
+  );
   console.log(eventStreamList);
+  const list = (eventStreamList || []).map(item => {
+    const eventStartTime = moment(item.createTime)
+      .subtract(item.duration, "ms")
+      .format();
+    const eventEndTime = item.createTime;
+    return {
+      attr: {
+        ...item,
+        name: item.content,
+        eventStartTime,
+        eventEndTime
+      }
+    };
+  });
+  const ganteConfig = {
+    unitStretch: 4.8, // 决定了主向量的单位长度
+    minInterval: "m",
+    type: "vertical"
+    // type: "horizontal"
+  };
   return (
     <div>
+      <RangeSelect
+        onChangeDate={date => {
+          setRangeStartTime(date);
+        }}
+      />
       <Gante
-        list={(eventStreamList || [])
-          .map(item => {
-            const eventStartTime = moment(item.createTime)
-              .subtract(item.duration, "ms")
-              .format();
-            const eventEndTime = item.createTime;
-            return {
-              attr: {
-                ...item,
-                name: item.content,
-                eventStartTime,
-                eventEndTime
-              }
-            };
-          })
-          .filter((item, index) => {
-            return index;
-            return index < 10;
-          })}
+        ganteConfig={ganteConfig}
+        list={list.filter(item => {
+          return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
+        })}
       />
     </div>
   );
+}
+
+function RangeSelect(props) {
+  const { onChangeDate } = props;
+  return <div>RangeSelect</div>;
 }
