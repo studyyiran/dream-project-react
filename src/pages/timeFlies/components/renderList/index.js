@@ -9,14 +9,17 @@ props:
       content:
     }
   ]
+
+  设置参数包括
+    1）日期
+    2）vertical
  */
 export default function(props) {
   const { eventStreamList } = props;
   const [rangeStartTime, setRangeStartTime] = useState(
-    moment().subtract(2, "day")
+    moment().subtract(3, "day")
   );
   const [isVertical, setVertical] = useState(true);
-  console.log(eventStreamList);
   const list = (eventStreamList || []).map(item => {
     const eventStartTime = moment(item.createTime)
       .subtract(item.duration, "ms")
@@ -49,6 +52,7 @@ export default function(props) {
         setVertical
       </div>
       <RangeSelect
+        currentSelectTime={rangeStartTime}
         onChangeDate={date => {
           setRangeStartTime(date);
         }}
@@ -64,6 +68,28 @@ export default function(props) {
 }
 
 function RangeSelect(props) {
-  const { onChangeDate } = props;
-  return <div>RangeSelect</div>;
+  const { onChangeDate, currentSelectTime } = props;
+  function handler(type) {
+    const nextTime = moment(currentSelectTime)[type](1, "day");
+    onChangeDate(nextTime);
+  }
+  return (
+    <div>
+      <span
+        onClick={() => {
+          handler("subtract");
+        }}
+      >
+        《
+      </span>
+      <span>{currentSelectTime.format("YYYY-MM-DD")}</span>
+      <span
+        onClick={() => {
+          handler("add");
+        }}
+      >
+        》
+      </span>
+    </div>
+  );
 }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./index.scss";
-
+const bgColorArr = ["#E1F3FF", "#FFF3E3", "#E7F3E7", "#E4E1FF", "#FFE3E9"];
 function RenderBlock(props) {
-  const { posX, posY, width, height, content } = props;
+  const { posX, posY, width, height, content, type = 0 } = props;
   const [dialogContent, setDialogContent] = useState(false);
   const [dialogOffsetX, setOffsetX] = useState(0);
   const [dialogOffsetY, setOffsetY] = useState(0);
@@ -15,13 +15,13 @@ function RenderBlock(props) {
     maxWidth: width,
     width: width,
     height: height,
-    background: "green",
+    background: bgColorArr[type],
     border: "1px solid red"
   };
   function setPos(e, showDialog) {
     // 这块的冒泡有点问题。导师后再看一下
     // 这块还是有抖动。得解决一下
-    console.log(e.target.className)
+    console.log(e.target.className);
     if (e.target.className === "dialog") {
       return;
     }
@@ -33,7 +33,7 @@ function RenderBlock(props) {
       Math.abs(dialogOffsetX - offsetX) > limit ||
       Math.abs(dialogOffsetY - offsetY) > limit
     ) {
-      setNeedUpdate(false)
+      setNeedUpdate(false);
       setOffsetX(offsetX);
       setOffsetY(offsetY);
     }
@@ -41,7 +41,7 @@ function RenderBlock(props) {
   return (
     <div
       onMouseEnter={e => {
-        setNeedUpdate(true)
+        setNeedUpdate(true);
         setDialogContent(content);
         // () => {
         //   const otherHeight = 85;
@@ -58,10 +58,10 @@ function RenderBlock(props) {
         setDialogContent("");
       }}
       style={styleContainer}
-      className="x-container"
+      className="render-block-container"
     >
-      <div className="center-flex zao-line-clamp item-block" style={style}>
-        {content}
+      <div className="zao-flex zao-line-clamp item-block" style={style}>
+        <span>{content}</span>
       </div>
       {dialogContent ? (
         <RenderDialog
@@ -82,12 +82,7 @@ function RenderDialog(props) {
         style={{ left: dialogOffsetX, top: dialogOffsetY }}
         className="dialog"
       >
-        left{dialogOffsetX}
-        top{dialogOffsetY}
-        content{content}
-        {/*{this.state.showDialog.childArr.map((item, index) => {*/}
-        {/*return <li key={index}>{item.attr.name}</li>;*/}
-        {/*})}*/}
+        {content}
       </div>
     );
   } else {

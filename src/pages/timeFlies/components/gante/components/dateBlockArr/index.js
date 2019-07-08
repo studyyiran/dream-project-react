@@ -2,10 +2,12 @@
 传入两个时间，转成moment
  */
 import moment from "moment";
+import "./index.scss";
 import React from "react";
 
 export default function RenderDateBlockArr(props) {
   let {
+    style = {},
     type,
     startCalcTime,
     minInterval,
@@ -19,10 +21,12 @@ export default function RenderDateBlockArr(props) {
     .minute(59);
   let arr = [];
   const value = unitStretch * timeRenderInterval;
-  let style =
+  Object.assign(
+    style,
     type === "vertical"
       ? { height: value }
-      : { minWidth: value, maxWidth: value };
+      : { minWidth: value, maxWidth: value }
+  );
   while (moment(timeNow).isBefore(timeEnd)) {
     timeNow.add(timeRenderInterval, minInterval);
     arr.push(
@@ -40,7 +44,7 @@ export default function RenderDateBlockArr(props) {
 function DateBlock(props) {
   const { content, style } = props;
   return (
-    <div className="date-block-container" style={style}>
+    <div className="zao-flex date-block-container" style={style}>
       {content}
     </div>
   );

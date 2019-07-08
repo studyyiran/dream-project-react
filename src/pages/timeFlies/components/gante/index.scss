@@ -1,7 +1,7 @@
 .gante-container {
   display: flex;
   .date-container {
-    flex: 0 0 100px;
+    flex: 0;
     display: flex;
   }
   .item-container {
@@ -14,9 +14,4 @@
 }
 .gante-container.horizontal {
   flex-direction: column;
-}
-
-.date-block-container {
-  box-sizing: border-box;
-  border: 1px solid red;
 }

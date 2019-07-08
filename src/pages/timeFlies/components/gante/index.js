@@ -4,15 +4,15 @@ import moment from "moment";
 import DateBlockArr from "./components/dateBlockArr";
 import ContentBlockArr from "./components/contentBlockArr";
 /*
-负责：
+  list: []
   ganteConfig: {
   unitStretch 时间轴上的单位长度
   minInterval 最小时间精度
   type 展示的方式（vertical）
   }
-样式定制
-横竖屏。
-基本参数
+
+  设置一些数据
+  1）
  */
 export default function RenderGanteContainer(props) {
   const { list = [], ganteConfig } = props;
@@ -21,24 +21,40 @@ export default function RenderGanteContainer(props) {
     const startCalcTime = moment(list[0].attr.eventStartTime)
       .clone()
       .minute(0);
+    const dataBlockValue = 50;
+    const dataBlockStyle = {
+      flexBasis: dataBlockValue
+    };
+    function renderDateBlockArr() {
+      const timeRenderInterval = 30; //
+      return (
+        <DateBlockArr
+          unitStretch={unitStretch}
+          minInterval={minInterval}
+          startCalcTime={startCalcTime}
+          type={type}
+          timeRenderInterval={timeRenderInterval}
+        />
+      );
+    }
+    function renderContentBlockArr() {
+      const unitContent = 100;
+      return (
+        <ContentBlockArr
+          unitStretch={unitStretch}
+          list={getModal(list, minInterval, startCalcTime)}
+          type={type}
+          unitContent={unitContent}
+        />
+      );
+    }
     return (
       <div className={`${type} gante-container`}>
-        <div className={`${type} date-container`}>
-          <DateBlockArr
-            unitStretch={unitStretch}
-            minInterval={minInterval}
-            startCalcTime={startCalcTime}
-            type={type}
-            timeRenderInterval={30}
-          />
+        <div style={dataBlockStyle} className={`${type} date-container`}>
+          {renderDateBlockArr()}
         </div>
         <div className={`${type} item-container`}>
-          <ContentBlockArr
-            unitStretch={unitStretch}
-            list={getModal(list, minInterval, startCalcTime)}
-            type={type}
-            unitContent={100}
-          />
+          {renderContentBlockArr()}
         </div>
       </div>
     );
