@@ -49,7 +49,7 @@ export default function(props) {
           });
         }}
       >
-        setVertical
+        set to {isVertical ? "horizontal" : "vertical"}
       </div>
       <RangeSelect
         currentSelectTime={rangeStartTime}

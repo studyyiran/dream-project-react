@@ -28,15 +28,19 @@ export default function RenderDateBlockArr(props) {
       : { minWidth: value, maxWidth: value }
   );
   while (moment(timeNow).isBefore(timeEnd)) {
-    timeNow.add(timeRenderInterval, minInterval);
+    const contentTime = timeNow
+      .clone()
+      .add(30, "m")
+      .format("HH:mm");
     arr.push(
       <DateBlock
         style={style}
         unitStretch={unitStretch}
-        key={timeNow.format("HH:mm")}
-        content={timeNow.format("HH:mm")}
+        key={contentTime}
+        content={contentTime}
       />
     );
+    timeNow.add(timeRenderInterval, minInterval);
   }
   return arr;
 }

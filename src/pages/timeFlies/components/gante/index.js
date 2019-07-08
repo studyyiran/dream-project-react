@@ -3,6 +3,7 @@ import "./index.scss";
 import moment from "moment";
 import DateBlockArr from "./components/dateBlockArr";
 import ContentBlockArr from "./components/contentBlockArr";
+import listMapAddPosInfo from "./listMapAddPosInfo";
 /*
   list: []
   ganteConfig: {
@@ -21,12 +22,12 @@ export default function RenderGanteContainer(props) {
     const startCalcTime = moment(list[0].attr.eventStartTime)
       .clone()
       .minute(0);
-    const dataBlockValue = 50;
+    const dataBlockValue = 50; // 日期flex长度
     const dataBlockStyle = {
       flexBasis: dataBlockValue
     };
     function renderDateBlockArr() {
-      const timeRenderInterval = 30; //
+      const timeRenderInterval = 60; // 时间间隔
       return (
         <DateBlockArr
           unitStretch={unitStretch}
@@ -38,11 +39,18 @@ export default function RenderGanteContainer(props) {
       );
     }
     function renderContentBlockArr() {
-      const unitContent = 100;
+      const unitContent = 100; // 单位内容长度
+      const contentSpaceType = 1; // contentSpace标准采用 1 2 还是calc
+      let listWithPosInfo = listMapAddPosInfo(
+        list,
+        minInterval,
+        startCalcTime,
+        contentSpaceType
+      );
       return (
         <ContentBlockArr
           unitStretch={unitStretch}
-          list={getModal(list, minInterval, startCalcTime)}
+          list={listWithPosInfo}
           type={type}
           unitContent={unitContent}
         />
@@ -60,68 +68,5 @@ export default function RenderGanteContainer(props) {
     );
   } else {
     return null;
-  }
-}
-
-/*
-根据排布的算法，计算出正确的坐标。
- */
-function getModal(list = [], minInterval, startCalcTime) {
-  const getWidthPos = getCell()(1);
-  return list.map(item => {
-    const { attr } = item;
-    let { eventStartTime, eventEndTime } = attr;
-    eventStartTime = moment(eventStartTime);
-    eventEndTime = moment(eventEndTime);
-    attr.posInfo = {
-      startTimePos: eventStartTime.diff(startCalcTime, minInterval),
-      endTimePos: eventEndTime.diff(startCalcTime, minInterval)
-    };
-    attr.posInfo.contentPos = getWidthPos(
-      attr.posInfo.startTimePos,
-      attr.posInfo.endTimePos
-    );
-    return item;
-  });
-
-  function getCell() {
-    const cell = [[]];
-    return value => {
-      return (lengthStartPos, lengthEndPos) => {
-        let contentPos = 0;
-        while (!checkCanFill()) {
-          contentPos++;
-        }
-        fillInto();
-        function checkCanFill() {
-          let result = true;
-          loop((b, a) => {
-            if (cell && cell[a] && cell[a][b] && cell[a][b] === true) {
-              result = false;
-              return "break";
-            }
-          });
-          return result;
-        }
-        function fillInto() {
-          loop((b, a) => {
-            if (!cell[a]) {
-              cell[a] = [];
-            }
-            cell[a][b] = true;
-          });
-        }
-        function loop(callBack) {
-          for (let length = lengthStartPos; length < lengthEndPos; length++) {
-            for (let width = 0; width < value; width++) {
-              if (callBack(length, contentPos + width) === "break") {
-                break;
-              }
-            }
-          }
-        }
-        return contentPos;
-      };
-    };
   }
 }
