@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./index.scss";
 import Gante from "../gante";
 import moment from "moment";
 /*
@@ -15,11 +16,34 @@ props:
     2）vertical
  */
 export default function(props) {
-  const { eventStreamList } = props;
   const [rangeStartTime, setRangeStartTime] = useState(
-    moment().subtract(3, "day")
+    moment().subtract(0, "day")
   );
   const [isVertical, setVertical] = useState(true);
+
+  return (
+    <div className="time-files-render-list">
+      <div
+        onClick={() => {
+          setVertical(value => {
+            return !value;
+          });
+        }}
+      >
+        set to {isVertical ? "horizontal" : "vertical"}
+      </div>
+      <RangeSelect
+        currentSelectTime={rangeStartTime}
+        onChangeDate={date => {
+          setRangeStartTime(date);
+        }}
+      />
+      {renderGante(props.eventStreamList, isVertical, rangeStartTime)}
+    </div>
+  );
+}
+
+function renderGante(eventStreamList, isVertical, rangeStartTime) {
   const list = (eventStreamList || []).map(item => {
     const eventStartTime = moment(item.createTime)
       .subtract(item.duration, "ms")
@@ -41,29 +65,12 @@ export default function(props) {
     // type: "horizontal"
   };
   return (
-    <div>
-      <div
-        onClick={() => {
-          setVertical(value => {
-            return !value;
-          });
-        }}
-      >
-        set to {isVertical ? "horizontal" : "vertical"}
-      </div>
-      <RangeSelect
-        currentSelectTime={rangeStartTime}
-        onChangeDate={date => {
-          setRangeStartTime(date);
-        }}
-      />
-      <Gante
-        ganteConfig={ganteConfig}
-        list={list.filter(item => {
-          return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
-        })}
-      />
-    </div>
+    <Gante
+      ganteConfig={ganteConfig}
+      list={list.filter(item => {
+        return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
+      })}
+    />
   );
 }
 
@@ -74,22 +81,22 @@ function RangeSelect(props) {
     onChangeDate(nextTime);
   }
   return (
-    <div>
-      <span
+    <div className="range-select">
+      <button
         onClick={() => {
           handler("subtract");
         }}
       >
-        《
-      </span>
+        prev
+      </button>
       <span>{currentSelectTime.format("YYYY-MM-DD")}</span>
-      <span
+      <button
         onClick={() => {
           handler("add");
         }}
       >
-        》
-      </span>
+        next
+      </button>
     </div>
   );
 }
