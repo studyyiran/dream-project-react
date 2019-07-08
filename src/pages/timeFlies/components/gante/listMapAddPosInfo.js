@@ -1,8 +1,11 @@
+import moment from "moment";
 /*
 根据排布的算法，计算出正确的坐标。
+props: {
+  list: [],
+  minInterval: 时间精度
+}
  */
-import moment from "moment";
-
 export default function listMapAddPosInfo(
   list = [],
   minInterval,

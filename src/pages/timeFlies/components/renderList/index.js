@@ -3,19 +3,22 @@ import "./index.scss";
 import Gante from "../gante";
 import moment from "moment";
 /*
-props:
-  list: [
+  props:
+  eventStreamList: [
     attr: {
+      createTime:
+      duration:
       name:
       content:
     }
   ]
-
-  设置参数包括
-    1）日期
-    2）vertical
  */
 export default function(props) {
+  /*
+  state
+    1）rangeStartTime 当前选中日期
+    2）vertical 展示方式
+   */
   const [rangeStartTime, setRangeStartTime] = useState(
     moment().subtract(0, "day")
   );
@@ -24,6 +27,7 @@ export default function(props) {
   return (
     <div className="time-files-render-list">
       <div
+        className="set-vertical"
         onClick={() => {
           setVertical(value => {
             return !value;
@@ -44,6 +48,11 @@ export default function(props) {
 }
 
 function renderGante(eventStreamList, isVertical, rangeStartTime) {
+  /*
+  const
+    1）unitStretch 决定了主向量的单位长度
+    2）minInterval 时间最小精度
+   */
   const list = (eventStreamList || []).map(item => {
     const eventStartTime = moment(item.createTime)
       .subtract(item.duration, "ms")
@@ -59,7 +68,7 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
     };
   });
   const ganteConfig = {
-    unitStretch: 4.8, // 决定了主向量的单位长度
+    unitStretch: 4.8,
     minInterval: "m",
     type: isVertical ? "vertical" : "horizontal"
     // type: "horizontal"
