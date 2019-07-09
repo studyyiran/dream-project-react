@@ -6,7 +6,16 @@ import ContentBlockArr from "./components/contentBlockArr";
 import listMapAddPosInfo from "./listMapAddPosInfo";
 /*
   props:
-    list: []
+    list: [
+    [
+    attr: {
+      eventStartTime
+      createTime:
+      duration:
+      name:
+      content:
+    }
+  ]]
     ganteConfig: {
       unitStretch 时间轴上的单位长度
       minInterval 最小时间精度
@@ -22,7 +31,7 @@ export default function RenderGanteContainer(props) {
       .startOf("h");
     const dataBlockValue = 50; //日期flex长度
     // style1
-    const dataBlockStyle = {
+    const dataContainerStyle = {
       flexBasis: dataBlockValue
     };
     // style2
@@ -48,7 +57,7 @@ export default function RenderGanteContainer(props) {
     }
     return (
       <div className={`${type} gante-container`}>
-        <div style={dataBlockStyle} className={`${type} date-container`}>
+        <div style={dataContainerStyle} className={`${type} date-container`}>
           {renderDateBlockArr(ganteConfig, startCalcTime)}
         </div>
         <div style={contentContainerStyle} className={`${type} item-container`}>

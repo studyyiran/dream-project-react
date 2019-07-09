@@ -1,53 +1,48 @@
-/*
-传入两个时间，转成moment
- */
 import moment from "moment";
 import "./index.scss";
 import React from "react";
+/*
 
+props: {
+  timeRenderInterval: 根据时间跨度，计算出perDateBlockStretch，列表渲染对应的时间累积
+  ...ganteConfig
+}
+ */
 export default function RenderDateBlockArr(props) {
   let {
-    style = {},
     type,
     startCalcTime,
-    minInterval,
     unitStretch,
+    minInterval,
     timeRenderInterval
   } = props;
+  let style = {};
   let timeNow = startCalcTime.clone();
   let timeEnd = startCalcTime.clone().endOf("day");
 
   let arr = [];
-  const value = unitStretch * timeRenderInterval;
+  const perDateBlockStretch = unitStretch * timeRenderInterval;
   Object.assign(
     style,
     type === "vertical"
-      ? { height: value }
-      : { minWidth: value, maxWidth: value }
+      ? { height: perDateBlockStretch }
+      : { minWidth: perDateBlockStretch, maxWidth: perDateBlockStretch }
   );
   while (moment(timeNow).isBefore(timeEnd)) {
     const contentTime = timeNow
       .clone()
-      .add(30, "m")
+      .add(timeRenderInterval / 2, minInterval)
       .format("HH:mm");
     arr.push(
-      <DateBlock
+      <div
+        className="zao-flex date-block-container"
         style={style}
-        unitStretch={unitStretch}
         key={contentTime}
-        content={contentTime}
-      />
+      >
+        {contentTime}
+      </div>
     );
     timeNow.add(timeRenderInterval, minInterval);
   }
   return arr;
-}
-
-function DateBlock(props) {
-  const { content, style } = props;
-  return (
-    <div className="zao-flex date-block-container" style={style}>
-      {content}
-    </div>
-  );
 }

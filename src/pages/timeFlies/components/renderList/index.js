@@ -4,14 +4,7 @@ import Gante from "../gante";
 import moment from "moment";
 /*
   props:
-  eventStreamList: [
-    attr: {
-      createTime:
-      duration:
-      name:
-      content:
-    }
-  ]
+    eventStreamList: []原始list数据
  */
 export default function(props) {
   /*
@@ -52,6 +45,15 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
   const
     1）unitStretch 决定了主向量的单位长度
     2）minInterval 时间最小精度
+
+    eventStreamList: [
+      attr: {
+        createTime:
+        duration:
+        name:
+        content:
+      }
+    ]
    */
   const ganteConfig = {
     unitStretch: 4.8, // 可以改变长度
@@ -89,6 +91,8 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
 }
 
 function RangeSelect(props) {
+  /*
+   */
   const { onChangeDate, currentSelectTime } = props;
   function handler(type) {
     const nextTime = moment(currentSelectTime)[type](1, "day");
