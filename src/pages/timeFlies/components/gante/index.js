@@ -15,22 +15,44 @@ import listMapAddPosInfo from "./listMapAddPosInfo";
  */
 export default function RenderGanteContainer(props) {
   const { list = [], ganteConfig = {} } = props;
-  const { type } = ganteConfig;
+  const { type, minInterval } = ganteConfig;
   if (list && list.length) {
     const startCalcTime = moment(list[0].attr.eventStartTime)
       .clone()
-      .minute(0);
+      .startOf("h");
     const dataBlockValue = 50; //日期flex长度
+    // style1
     const dataBlockStyle = {
       flexBasis: dataBlockValue
     };
+    // style2
+    let contentContainerStyle = {};
+    const diffValue =
+      -ganteConfig.unitStretch *
+      moment(startCalcTime).diff(
+        moment(startCalcTime)
+          .clone()
+          .startOf("day"),
+        minInterval
+      );
+    if (type === "vertical") {
+      contentContainerStyle = {
+        left: dataBlockValue,
+        top: diffValue
+      };
+    } else {
+      contentContainerStyle = {
+        top: dataBlockValue,
+        left: diffValue
+      };
+    }
     return (
       <div className={`${type} gante-container`}>
         <div style={dataBlockStyle} className={`${type} date-container`}>
           {renderDateBlockArr(ganteConfig, startCalcTime)}
         </div>
-        <div className={`${type} item-container`}>
-          {renderContentBlockArr(ganteConfig, startCalcTime, list)}
+        <div style={contentContainerStyle} className={`${type} item-container`}>
+          {renderContentBlockArr(ganteConfig, list)}
         </div>
       </div>
     );
@@ -49,16 +71,11 @@ function renderDateBlockArr(ganteConfig, startCalcTime) {
     />
   );
 }
-function renderContentBlockArr(ganteConfig, startCalcTime, list) {
+function renderContentBlockArr(ganteConfig, list) {
   const { minInterval, ...otherGanteConfig } = ganteConfig;
   const unitContent = 100; // 单位内容长度
   const contentSpaceType = 1; // contentSpace标准采用 1 2 还是calc
-  let listWithPosInfo = listMapAddPosInfo(
-    list,
-    minInterval,
-    startCalcTime,
-    contentSpaceType
-  );
+  let listWithPosInfo = listMapAddPosInfo(list, minInterval, contentSpaceType);
   return (
     <ContentBlockArr
       {...otherGanteConfig}

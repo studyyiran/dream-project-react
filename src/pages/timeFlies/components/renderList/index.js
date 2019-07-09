@@ -53,11 +53,22 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
     1）unitStretch 决定了主向量的单位长度
     2）minInterval 时间最小精度
    */
+  const ganteConfig = {
+    unitStretch: 4.8, // 可以改变长度
+    minInterval: "m", // 可以切换成秒。这两个const都能像type一样跃迁为state进行操作。
+    type: isVertical ? "vertical" : "horizontal"
+    // type: "horizontal"
+  };
   const list = (eventStreamList || []).map(item => {
     const eventStartTime = moment(item.createTime)
       .subtract(item.duration, "ms")
       .format();
-    const eventEndTime = item.createTime;
+    let eventEndTime = moment(item.createTime);
+    if (
+      moment(eventEndTime).diff(eventStartTime, ganteConfig.minInterval) <= 1
+    ) {
+      eventEndTime = moment(eventStartTime).add(1, ganteConfig.minInterval);
+    }
     return {
       attr: {
         ...item,
@@ -67,12 +78,6 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
       }
     };
   });
-  const ganteConfig = {
-    unitStretch: 4.8, // 可以改变长度
-    minInterval: "m", // 可以切换成秒。这两个const都能像type一样跃迁为state进行操作。
-    type: isVertical ? "vertical" : "horizontal"
-    // type: "horizontal"
-  };
   return (
     <Gante
       ganteConfig={ganteConfig}

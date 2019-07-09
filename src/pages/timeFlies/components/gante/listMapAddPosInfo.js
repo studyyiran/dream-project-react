@@ -9,7 +9,6 @@ props: {
 export default function listMapAddPosInfo(
   list = [],
   minInterval,
-  startCalcTime,
   contentSpaceType = 1
 ) {
   const setContentSpace = getCell();
@@ -20,11 +19,13 @@ export default function listMapAddPosInfo(
     eventEndTime = moment(eventEndTime);
     const contentSpace = calcContentSpace(attr);
     let fillByStartEndPos = setContentSpace(contentSpace);
-
+    const timeStart = moment(eventStartTime)
+      .clone()
+      .startOf("day");
     attr.posInfo = {
       contentSpace,
-      startTimePos: eventStartTime.diff(startCalcTime, minInterval),
-      endTimePos: eventEndTime.diff(startCalcTime, minInterval)
+      startTimePos: eventStartTime.diff(timeStart, minInterval),
+      endTimePos: eventEndTime.diff(timeStart, minInterval)
     };
     Object.assign(attr.posInfo, {
       contentPos: fillByStartEndPos(
@@ -52,8 +53,8 @@ export default function listMapAddPosInfo(
     if (contentSpace <= 0) {
       contentSpace = 1;
     }
-    if (contentSpace > 2) {
-      contentSpace = 2;
+    if (contentSpace > 5) {
+      contentSpace = 5;
     }
     return contentSpace;
   }
@@ -88,6 +89,7 @@ export default function listMapAddPosInfo(
             cell[a][b] = true;
           });
         }
+        // 这块出现过无法进入的bug 已修复
         function loop(callBack) {
           for (let length = lengthStartPos; length < lengthEndPos; length++) {
             for (let width = 0; width < contentSpace; width++) {

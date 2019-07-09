@@ -15,10 +15,8 @@ export default function RenderDateBlockArr(props) {
     timeRenderInterval
   } = props;
   let timeNow = startCalcTime.clone();
-  let timeEnd = startCalcTime
-    .clone()
-    .hour(23)
-    .minute(59);
+  let timeEnd = startCalcTime.clone().endOf("day");
+
   let arr = [];
   const value = unitStretch * timeRenderInterval;
   Object.assign(

@@ -1,11 +1,12 @@
 .gante-container {
   display: flex;
+  position: relative;
   .date-container {
     flex: 0;
     display: flex;
   }
   .item-container {
-    position: relative;
+    position: absolute;
     flex: 1 0 0;
   }
   .date-container.vertical {
