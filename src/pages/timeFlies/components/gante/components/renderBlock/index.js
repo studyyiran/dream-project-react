@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import "./index.scss";
-const bgColorArr = ["#E1F3FF", "#FFF3E3", "#E7F3E7", "#E4E1FF", "#FFE3E9"];
+/*
+进行absolute渲染。
+props: {
+  posX,posY // 传入坐标有关的信息。
+  width, height // 传入大小信息。
+  content // 传入内容
+}
+ */
 function RenderBlock(props) {
-  const { posX, posY, width, height, content, type = 0 } = props;
+  const { posX, posY, width, height, content, background } = props;
   const [dialogContent, setDialogContent] = useState(false);
   const [dialogOffsetX, setOffsetX] = useState(0);
   const [dialogOffsetY, setOffsetY] = useState(0);
@@ -13,15 +20,13 @@ function RenderBlock(props) {
   };
   let style = {
     maxWidth: width,
-    width: width,
-    height: height,
-    background: bgColorArr[type],
-    border: "1px solid red"
+    width,
+    height,
+    background
   };
   function setPos(e, showDialog) {
-    // 这块的冒泡有点问题。导师后再看一下
+    // 这块的冒泡有点问题。再看一下
     // 这块还是有抖动。得解决一下
-    console.log(e.target.className);
     if (e.target.className === "dialog") {
       return;
     }
@@ -38,22 +43,14 @@ function RenderBlock(props) {
       setOffsetY(offsetY);
     }
   }
+  // function内部的绑定，只能箭头吗？有性能问题嘛？
   return (
     <div
       onMouseEnter={e => {
         setNeedUpdate(true);
         setDialogContent(content);
-        // () => {
-        //   const otherHeight = 85;
-        //   let currentHeight =
-        //     otherHeight +
-        //     this.heightRef.current.clientHeight +
-        //     this.heightRef.current.parentElement.offsetTop;
-        // }
       }}
-      onMouseMove={e => {
-        setPos(e);
-      }}
+      onMouseMove={setPos}
       onMouseLeave={() => {
         setDialogContent("");
       }}

@@ -11,19 +11,8 @@ export default function RenderContentBlockArr(props) {
   const { list = [], unitStretch, unitContent, type = "vertical" } = props;
   return list.map(item => {
     const { attr } = item;
-    const {
-      contentPos,
-      startTimePos,
-      endTimePos,
-      contentSpace = 1
-    } = attr.posInfo;
-    const { content, _id, eventType } = attr;
-    const eventTypeToColor = {
-      dream: 1,
-      studytodo: 2,
-      review: 3
-    };
-    const { eventStartTime, eventEndTime } = attr;
+    const { contentPos, startTimePos, endTimePos, contentSpace } = attr.posInfo;
+
     const stretchLength = unitStretch * (endTimePos - startTimePos);
     const contentLength = unitContent * contentSpace;
     const stretchPosWithUnit = startTimePos * unitStretch;
@@ -40,9 +29,11 @@ export default function RenderContentBlockArr(props) {
       width = stretchLength;
       height = contentLength;
     }
+
+    const { eventStartTime, eventEndTime } = attr;
+    const { content, _id, eventType } = attr;
     return (
       <RenderBlock
-        type={eventTypeToColor[eventType]}
         key={_id}
         content={
           <div>
@@ -56,9 +47,31 @@ export default function RenderContentBlockArr(props) {
         }
         posX={posX}
         posY={posY}
+        background={getColorByType(eventType)}
         width={width}
         height={height}
       />
     );
   });
+}
+/*
+不同类别渲染不同颜色
+ */
+function getColorByType(type) {
+  console.log(type)
+  let color;
+  switch (type) {
+    case "dream":
+      color = "#FFE3E9";
+      break;
+    case "studytodo":
+      color = "#E4E1FF";
+      break;
+    case "review":
+      color = "#E7F3E7";
+      break;
+    default:
+      color = "#E1F3FF";
+  }
+  return color;
 }

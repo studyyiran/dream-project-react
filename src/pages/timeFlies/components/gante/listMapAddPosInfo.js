@@ -14,25 +14,8 @@ export default function listMapAddPosInfo(
 ) {
   const setContentSpace = getCell();
   return list.map(item => {
-    function calcContentSpace() {
-      const perWordWrap = 1;
-      let contentSpace =
-        contentSpaceType === "calc"
-          ? Math.ceil(
-              (perWordWrap * content.length) /
-                eventEndTime.diff(eventStartTime, minInterval)
-            )
-          : contentSpaceType;
-      if (contentSpace <= 0) {
-        contentSpace = 1;
-      }
-      if (contentSpace > 2) {
-        contentSpace = 2;
-      }
-      return contentSpace;
-    }
     const { attr } = item;
-    let { eventStartTime, eventEndTime, content } = attr;
+    let { eventStartTime, eventEndTime } = attr;
     eventStartTime = moment(eventStartTime);
     eventEndTime = moment(eventEndTime);
     const contentSpace = calcContentSpace(attr);
@@ -43,13 +26,41 @@ export default function listMapAddPosInfo(
       startTimePos: eventStartTime.diff(startCalcTime, minInterval),
       endTimePos: eventEndTime.diff(startCalcTime, minInterval)
     };
-    attr.posInfo.contentPos = fillByStartEndPos(
-      attr.posInfo.startTimePos,
-      attr.posInfo.endTimePos
-    );
+    Object.assign(attr.posInfo, {
+      contentPos: fillByStartEndPos(
+        attr.posInfo.startTimePos,
+        attr.posInfo.endTimePos
+      )
+    });
     return item;
   });
 
+  /*
+   根据设定的type，返回需要的contentSpace
+   */
+  function calcContentSpace(attr) {
+    let { eventStartTime, eventEndTime, content } = attr;
+    const perWordWrap = 1;
+    // 根据内容长度和空间大小
+    let contentSpace =
+      contentSpaceType === "calc"
+        ? Math.ceil(
+            (perWordWrap * content.length) /
+              eventEndTime.diff(eventStartTime, minInterval)
+          )
+        : contentSpaceType;
+    if (contentSpace <= 0) {
+      contentSpace = 1;
+    }
+    if (contentSpace > 2) {
+      contentSpace = 2;
+    }
+    return contentSpace;
+  }
+
+  /*
+  3层科里化。用于根据 冲突占位 进行cell填充。返回contentPos的位置。
+   */
   function getCell() {
     const cell = [[]];
     return contentSpace => {
@@ -87,6 +98,7 @@ export default function listMapAddPosInfo(
           }
         }
         return contentPos;
+        // TODO 不想利用闭包。
       };
     };
   }

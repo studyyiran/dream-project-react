@@ -20,9 +20,9 @@ export default function(props) {
     2）vertical 展示方式
    */
   const [rangeStartTime, setRangeStartTime] = useState(
-    moment().subtract(0, "day")
+    moment().subtract(1, "day")
   );
-  const [isVertical, setVertical] = useState(true);
+  const [isVertical, setVertical] = useState(false);
 
   return (
     <div className="time-files-render-list">
@@ -68,8 +68,8 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
     };
   });
   const ganteConfig = {
-    unitStretch: 4.8,
-    minInterval: "m",
+    unitStretch: 4.8, // 可以改变长度
+    minInterval: "m", // 可以切换成秒。这两个const都能像type一样跃迁为state进行操作。
     type: isVertical ? "vertical" : "horizontal"
     // type: "horizontal"
   };

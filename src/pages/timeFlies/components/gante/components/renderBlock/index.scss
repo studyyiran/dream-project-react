@@ -6,6 +6,7 @@
     font-size: 14px;
     font-family: PingFangSC-Regular;
     color: rgba(51, 51, 51, 1);
+    border: 1px solid red;
   }
   // 我不明白这个宽度，flex内部元素宽度有什么决定的。很奇怪
   .item-block > span {
