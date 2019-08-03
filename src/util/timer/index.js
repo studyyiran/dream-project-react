@@ -1,5 +1,6 @@
 function index({ time, stopTime, runCallBack, finishCallBack, minInterval }) {
   this.minInterval = minInterval || 1000;
+  this.status = "stop";
   if (this.minInterval > 0) {
     this.stopTime = stopTime || true;
   } else if (this.minInterval < 0) {
@@ -9,13 +10,18 @@ function index({ time, stopTime, runCallBack, finishCallBack, minInterval }) {
   this.timeIntervalId = undefined;
   this.finishCallBack = finishCallBack;
   this.runCallBack = runCallBack;
+  // 自动start
+  this.start();
 }
 
 index.prototype.start = function() {
-  this.perSecondCall(true);
-  this.timeIntervalId = window.setInterval(() => {
-    this.perSecondCall();
-  }, Math.abs(this.minInterval));
+  if (this.status === "stop") {
+    this.status = "start";
+    this.perSecondCall(true);
+    this.timeIntervalId = window.setInterval(() => {
+      this.perSecondCall();
+    }, Math.abs(this.minInterval));
+  }
 };
 
 index.prototype.stop = function() {

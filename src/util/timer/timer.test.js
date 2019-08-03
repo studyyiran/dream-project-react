@@ -76,7 +76,7 @@ describe("test 倒计时", () => {
     expect.assertions(3);
     timer.start();
   });
-  it("逆向计时 默认参数", done => {
+  it("逆向倒计时 默认参数", done => {
     let time = 100;
     let count = 0;
     let minInterval = -100;
