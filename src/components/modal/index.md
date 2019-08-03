@@ -10,6 +10,7 @@ www-tutor
 
 差异
 antd visible属性只对component组件有效
+antd的modal 有两种模式。其实他们严格执行了收控和非受控。也就是把关闭的权限给自己了。并且没有调用onCancel
 
 变更
 children -> content

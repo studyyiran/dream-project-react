@@ -1,6 +1,11 @@
-function index({ time, runCallBack, finishCallBack, minInterval }) {
+function index({ time, stopTime, runCallBack, finishCallBack, minInterval }) {
   this.minInterval = minInterval || 1000;
-  this.remainTime = time;
+  if (this.minInterval > 0) {
+    this.stopTime = stopTime || true;
+  } else if (this.minInterval < 0) {
+    this.stopTime = stopTime || 0;
+  }
+  this.currentTime = time;
   this.timeIntervalId = undefined;
   this.finishCallBack = finishCallBack;
   this.runCallBack = runCallBack;
@@ -19,23 +24,27 @@ index.prototype.stop = function() {
 
 index.prototype.perSecondCall = function(firstCall) {
   if (firstCall) {
-    this.runCallBack && this.runCallBack(this.format(this.remainTime));
-  } else if (this.remainTime >= this.minInterval) {
-    this.remainTime = this.remainTime - this.minInterval;
-    this.runCallBack && this.runCallBack(this.format(this.remainTime));
+    this.runCallBack && this.runCallBack(this.format(this.currentTime));
+  } else if (
+    // 如果还有剩余
+    Math.abs(Math.abs(this.currentTime) - Math.abs(this.stopTime)) >=
+      Math.abs(this.minInterval) ||
+    this.stopTime === true
+  ) {
+    this.currentTime = this.currentTime + this.minInterval;
+    this.runCallBack && this.runCallBack(this.format(this.currentTime));
   } else {
     if (this.timeIntervalId) {
       this.stop();
     }
-    this.finishCallBack && this.finishCallBack(this.remainTime);
+    this.finishCallBack && this.finishCallBack(this.currentTime);
   }
 };
 
 index.prototype.format = function(second) {
+  // d h m push(s)
   const timer = [24 * 60 * 60 * 1000, 60 * 60 * 1000, 60 * 1000];
-  if (this.minInterval) {
-    timer.push(this.minInterval);
-  }
+  timer.push(Math.abs(this.minInterval));
   let lastTime = second;
   let arr = timer.map(unit => {
     unit = Math.abs(unit);
@@ -46,7 +55,7 @@ index.prototype.format = function(second) {
     } else if (result > 0) {
       return "0" + result;
     } else {
-      return 0;
+      return "0";
     }
   });
   return arr;
