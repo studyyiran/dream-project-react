@@ -4,12 +4,12 @@ import Timer from "../../util/timer";
 export default function useTimer(status, time) {
   const [timer, setTimer] = useState(0);
   const refTimer = useRef();
-  // 这块为什么不能带time万？
   useEffect(() => {
     if (status === "start") {
       const info = {
-        minInterval: -1000,
-        time,
+        minInterval: 1000,
+        // 这个时间需要当前时间参与下初始化。
+        time: Date.now() + time,
         runCallBack: times => {
           if (times) {
             setTimer(times);
@@ -28,7 +28,7 @@ export default function useTimer(status, time) {
         refTimer.current.stop &&
         refTimer.current.stop();
     }
-  }, [status]);
+  }, [status, time]);
   useEffect(() => {
     // 退出页面关闭
     return () => {

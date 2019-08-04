@@ -3,6 +3,7 @@ import "./index.scss";
 import moment from "moment";
 import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import useTimer from "../../../useHook/useTimer";
+import RenderTimer from "../../../components/renderTimer";
 
 export default function(props) {
   // 这个还单纯吗？
@@ -62,7 +63,7 @@ function Item(props) {
 
   const timer = useTimer(
     status,
-    Number(continueSecond) + Number(Date.now()) - Number(startTime)
+    Number(continueSecond) - Number(startTime)
   );
   function renderTimer() {
     if (isStart) {
@@ -98,25 +99,4 @@ function Item(props) {
       </div>
     </CloseAndSureContainer>
   );
-}
-
-function RenderTimer(props) {
-  const { timer } = props;
-  const arr = ["天", "时", "分", "秒"];
-  let timeString = "";
-  (timer || []).forEach((item, index) => {
-    if (index === 0) {
-      if (item) {
-        timeString = `${item}天`;
-      }
-    } else {
-      timeString = timeString + `${item}`;
-      if (index !== arr.length - 1) {
-        if (index !== 0) {
-          timeString = timeString + ":";
-        }
-      }
-    }
-  });
-  return timeString;
 }

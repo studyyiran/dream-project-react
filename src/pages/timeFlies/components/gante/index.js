@@ -58,10 +58,10 @@ export default function RenderGanteContainer(props) {
     return (
       <div className={`${type} gante-container`}>
         <div style={dataContainerStyle} className={`${type} date-container`}>
-          {renderDateBlockArr(ganteConfig, startCalcTime)}
+          {renderDateBlockArr({ ...ganteConfig, startCalcTime })}
         </div>
         <div style={contentContainerStyle} className={`${type} item-container`}>
-          {renderContentBlockArr(ganteConfig, list)}
+          {renderContentBlockArr({ ganteConfig, list })}
         </div>
       </div>
     );
@@ -70,17 +70,12 @@ export default function RenderGanteContainer(props) {
   }
 }
 
-function renderDateBlockArr(ganteConfig, startCalcTime) {
+function renderDateBlockArr(props) {
   const timeRenderInterval = 60; // 时间间隔
-  return (
-    <DateBlockArr
-      {...ganteConfig}
-      startCalcTime={startCalcTime}
-      timeRenderInterval={timeRenderInterval}
-    />
-  );
+  return <DateBlockArr {...props} timeRenderInterval={timeRenderInterval} />;
 }
-function renderContentBlockArr(ganteConfig, list) {
+function renderContentBlockArr(props) {
+  const { ganteConfig, list } = props;
   const { minInterval, ...otherGanteConfig } = ganteConfig;
   const unitContent = 100; // 单位内容长度
   const contentSpaceType = 1; // contentSpace标准采用 1 2 还是calc

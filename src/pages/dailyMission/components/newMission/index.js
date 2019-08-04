@@ -5,6 +5,7 @@ import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import Form from "../../../components/form";
 import useTimer from "../../../useHook/useTimer";
 import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
+import RenderTimer from "../../../components/renderTimer";
 
 export default function(props) {
   // 这个还单纯吗？
@@ -54,6 +55,7 @@ function StudyTodoList(props) {
 }
 
 function Item(props) {
+  // 吐槽 这个命名太随性了 hide
   const { info, changeStatus, hide } = props;
   const { _id, createTime, content, status, startTime, continueSecond } = info;
   const isStart = status === "start";
@@ -79,7 +81,7 @@ function Item(props) {
 
   const timer = useTimer(
     status,
-    Number(continueSecond) + Number(Date.now()) - Number(startTime)
+    Number(continueSecond) - Number(startTime)
   );
   function renderTimer() {
     if (isStart) {
@@ -115,25 +117,4 @@ function Item(props) {
       </div>
     </CloseAndSureContainer>
   );
-}
-
-function RenderTimer(props) {
-  const { timer } = props;
-  const arr = ["天", "时", "分", "秒"];
-  let timeString = "";
-  (timer || []).forEach((item, index) => {
-    if (index === 0) {
-      if (item) {
-        timeString = `${item}天`;
-      }
-    } else {
-      timeString = timeString + `${item}`;
-      if (index !== arr.length - 1) {
-        if (index !== 0) {
-          timeString = timeString + ":";
-        }
-      }
-    }
-  });
-  return timeString;
 }

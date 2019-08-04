@@ -80,14 +80,10 @@ function renderGante(eventStreamList, isVertical, rangeStartTime) {
       }
     };
   });
-  return (
-    <Gante
-      ganteConfig={ganteConfig}
-      list={list.filter(item => {
-        return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
-      })}
-    />
-  );
+  const fliterList = list.filter(item => {
+    return moment(item.attr.eventStartTime).isSame(rangeStartTime, "day");
+  });
+  return <Gante ganteConfig={ganteConfig} list={fliterList} />;
 }
 
 function RangeSelect(props) {

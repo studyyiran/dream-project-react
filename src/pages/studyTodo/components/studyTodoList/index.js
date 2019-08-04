@@ -5,6 +5,7 @@ import CloseAndSureContainer from "../../../components/closeAndSureContainer";
 import useTimer from "../../../useHook/useTimer";
 import ButtonInputComponent from "../../../studyReview/components/buttonInputComponent";
 import Form from "../../../components/form";
+import RenderTimer from "../../../components/renderTimer";
 
 export default function(props) {
   const submitId = "newStudyTodo";
@@ -100,25 +101,4 @@ function Item(props) {
       </div>
     </CloseAndSureContainer>
   );
-}
-
-function RenderTimer(props) {
-  const { timer } = props;
-  const arr = ["天", "时", "分", "秒"];
-  let timeString = "";
-  (timer || []).forEach((item, index) => {
-    if (index === 0) {
-      if (item) {
-        timeString = `${item}天`;
-      }
-    } else {
-      timeString = timeString + `${item}`;
-      if (index !== arr.length - 1) {
-        if (index !== 0) {
-          timeString = timeString + ":";
-        }
-      }
-    }
-  });
-  return timeString;
 }
