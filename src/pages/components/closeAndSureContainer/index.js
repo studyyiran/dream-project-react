@@ -25,7 +25,9 @@ export default function(props) {
         ) : null}
       </div>
       {isShowSure ? (
-        <button form={submitId} onClick={sureCallBack}>{buttonContent}</button>
+        <button form={submitId} onClick={sureCallBack}>
+          {buttonContent}
+        </button>
       ) : null}
     </div>
   );
