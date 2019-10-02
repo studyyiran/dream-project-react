@@ -1,5 +1,5 @@
 import ajax from "../../../util/ajax";
-const host = "http://localhost:3000";
+const host = "http://localhost:4000";
 const userDailyMissionUrl = host + "/dailyMission/newMission";
 const userTodayMissionUrl = host + "/dailyMission/userTodayMission";
 // 其实 server和actions 目前是11对应 也许并不一定耦合对应
