@@ -8,7 +8,7 @@ const server = {
     console.log("start server testRouter");
     // const url = "/getEventStreamList";
     const url = "/testRouter";
-    const result = await ajax.get(url);
+    const result = await ajax.get(host + url);
     // const result = await ajax.get(pageHost + url);
     return result;
   }
