@@ -1,6 +1,6 @@
 import ajax from "../../../util/ajax";
 
-const host = "http://localhost:4000";
+const host = "http://localhost:4000/api";
 const localUrl = host + "/reviewPart";
 const reviewServer = {
   updateReviewInfo: function updateReviewCount(data) {
