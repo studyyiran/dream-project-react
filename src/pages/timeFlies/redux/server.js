@@ -5,7 +5,8 @@ const pageHost = host + "/eventStream";
 
 const server = {
   getEventStreamList: async () => {
-    const url = "/getEventStreamList";
+    // const url = "/getEventStreamList";
+    const url = "/testRouter";
     const result = await ajax.get(pageHost + url);
     return result;
   }
