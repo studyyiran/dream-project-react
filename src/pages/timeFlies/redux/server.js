@@ -1,6 +1,6 @@
 import ajax from "../../../util/ajax";
 
-const host = "http://localhost:4000/api";
+const host = "/api";
 const pageHost = host + "/eventStream";
 
 const server = {
