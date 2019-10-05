@@ -1,3 +1,3 @@
 export function getProxy() {
-  return "/apy";
+  return "/api";
 }

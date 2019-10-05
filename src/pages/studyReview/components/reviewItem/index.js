@@ -17,10 +17,7 @@ export default function ReviewItem(props) {
     createTime,
     status
   } = info;
-  const timer = useTimer(
-    status,
-    Number(continueSecond) + Number(Date.now()) - Number(startTime)
-  );
+  const timer = useTimer(status, Number(continueSecond) - Number(startTime));
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
   function startReviewHandler() {
