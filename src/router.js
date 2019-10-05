@@ -8,16 +8,16 @@ import { AppLayout } from "./components/appLayout";
 
 function AppRouter() {
   return (
-    <AppLayout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AppLayout>
         <Switch>
           <Route path="/timeFlies" component={TimeFlies} />
           <Route path="/studyTodo" component={StudyTodo} />
           <Route path="/studyReview" component={StudyReview} />
           <Route path="/dailyMission" component={DailyMission} />
         </Switch>
-      </BrowserRouter>
-    </AppLayout>
+      </AppLayout>
+    </BrowserRouter>
   );
 }
 

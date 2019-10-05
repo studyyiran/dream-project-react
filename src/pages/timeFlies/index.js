@@ -10,11 +10,7 @@ function TimeFlies(props) {
     // server.getEventStreamList();
     getEventStreamList();
   }, [getEventStreamList]);
-  return (
-    <Layout>
-      <RenderList eventStreamList={eventStreamList} />
-    </Layout>
-  );
+  return <RenderList eventStreamList={eventStreamList} />;
 }
 
 export default connect(TimeFlies);

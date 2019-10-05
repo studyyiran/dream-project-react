@@ -2,6 +2,7 @@ import React, { useMemo, useEffect, useState } from "react";
 import util from "../../util";
 import Timer from "../../util/timer";
 import RenderTimer from "../../pages/components/renderTimer";
+import Layout from "../../pages/components/layout";
 
 export function AppLayout(props) {
   const [timer, setTimer] = useState();
@@ -36,7 +37,9 @@ export function AppLayout(props) {
   }, [timer2]);
   return (
     <div>
-      <RenderTimer timer={timer} />
+      <Layout>
+        <RenderTimer timer={timer} />
+      </Layout>
       {props.children}
     </div>
   );

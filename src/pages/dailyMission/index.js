@@ -8,14 +8,14 @@ import Layout from "../components/layout";
 function Page(props) {
   // 这边需要一个switch标签
   return (
-    <Layout>
+    <div>
       <h1>新增dailyMission</h1>
       <NewMission {...props} />
       <h1>今日</h1>
       <TodayMission {...props} />
       <h1>历史</h1>
       <HistoryMission {...props} />
-    </Layout>
+    </div>
   );
 }
 

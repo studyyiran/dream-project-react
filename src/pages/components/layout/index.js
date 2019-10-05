@@ -9,6 +9,7 @@ export default connect(
 )(Layout);
 
 function Layout(props) {
+  console.log("run layout");
   const { children, currentPath } = props;
   function renderCurrentRunList() {
     const { dailyMissionReducers } = props;

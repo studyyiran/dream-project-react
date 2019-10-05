@@ -8,11 +8,7 @@ function Page(props) {
   useEffect(() => {
     getList();
   }, [getList]);
-  return (
-    <Layout>
-      <StudyTodoList {...props} />
-    </Layout>
-  );
+  return <StudyTodoList {...props} />;
 }
 
 export default Connect(Page);

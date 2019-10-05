@@ -12,12 +12,7 @@ function Page(props) {
     // 这个和直接调用不一样。props传过来的，包装了dispatch
     getReviewList();
   }, [getReviewList, setReviewList]);
-  return (
-    <Layout>
-      <ReviewList {...props} />
-      {/*<ReviewList {...props} type={"noFinish"} />*/}
-    </Layout>
-  );
+  return <ReviewList {...props} />;
 }
 
 // 为什么connect传入的页不是jsx 而是 Component
