@@ -1,5 +1,4 @@
 function index({ time, stopTime, runCallBack, finishCallBack, minInterval }) {
-  alert(time);
   this.minInterval = minInterval || 1000;
   this.status = "stop";
   if (this.minInterval > 0) {

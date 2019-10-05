@@ -41,7 +41,14 @@ function StudyTodoList(props) {
 
 function Item(props) {
   const { info, changeStudyItemStatus, hideStudyItem } = props;
-  const { _id, createTime, content, status, startTime, continueSecond } = info;
+  const {
+    _id,
+    createTime,
+    content,
+    status,
+    lastingTime,
+    continueSecond
+  } = info;
   const isStart = status === "start";
   function startHandler() {
     // 开始
@@ -62,7 +69,7 @@ function Item(props) {
       hideStudyItem(_id);
     }
   }
-  const timer = useTimer(status, Number(continueSecond) - Number(startTime));
+  const timer = useTimer(status, Number(lastingTime));
   function renderTimer() {
     if (isStart) {
       return (
