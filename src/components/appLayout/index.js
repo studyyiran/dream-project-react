@@ -37,9 +37,8 @@ export function AppLayout(props) {
   }, [timer2]);
   return (
     <div>
-      <Layout>
-        <RenderTimer timer={timer} />
-      </Layout>
+      <Layout />
+      <RenderTimer timer={timer} />
       {props.children}
     </div>
   );
