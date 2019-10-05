@@ -28,8 +28,6 @@ export default function useTimer(status, time) {
         refTimer.current.stop &&
         refTimer.current.stop();
     }
-  }, [status, time]);
-  useEffect(() => {
     // 退出页面关闭
     return () => {
       refTimer &&
@@ -37,6 +35,7 @@ export default function useTimer(status, time) {
         refTimer.current.stop &&
         refTimer.current.stop();
     };
-  }, []);
+  }, [status, time]);
+  useEffect(() => {}, []);
   return timer;
 }
