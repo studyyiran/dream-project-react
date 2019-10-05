@@ -9,7 +9,7 @@ export default function useTimer(status, time) {
       const info = {
         minInterval: 1000,
         // 这个时间需要当前时间参与下初始化。
-        time: Date.now() + time,
+        time: Date.now() + time + 5000,
         runCallBack: times => {
           if (times) {
             setTimer(times);
