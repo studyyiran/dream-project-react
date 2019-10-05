@@ -1,6 +1,6 @@
 import ajax from "../../../util/ajax";
-const host = "/api";
-const localUrl = host + "/studyTodo";
+import { getProxy } from "../../../util/util";
+const localUrl = getProxy() + "/studyTodo";
 // 其实 server和actions 目前是11对应 也许并不一定耦合对应
 const server = {
   newStudyTodoItem: data => {

@@ -1,7 +1,7 @@
 import ajax from "../../../util/ajax";
+import { getProxy } from "../../../util/util";
 
-const host = "/api";
-const pageHost = host + "/eventStream";
+const pageHost = getProxy() + "/eventStream";
 
 const server = {
   getEventStreamList: async () => {

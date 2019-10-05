@@ -1,7 +1,7 @@
 import ajax from "../../../util/ajax";
-const host = "/api";
-const userDailyMissionUrl = host + "/dailyMission/newMission";
-const userTodayMissionUrl = host + "/dailyMission/userTodayMission";
+import { getProxy } from "../../../util/util";
+const userDailyMissionUrl = getProxy() + "/dailyMission/newMission";
+const userTodayMissionUrl = getProxy() + "/dailyMission/userTodayMission";
 // 其实 server和actions 目前是11对应 也许并不一定耦合对应
 const server = {
   newItem: data => {

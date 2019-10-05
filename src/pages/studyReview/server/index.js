@@ -1,7 +1,7 @@
 import ajax from "../../../util/ajax";
+import { getProxy } from "../../../util/util";
 
-const host = "/api";
-const localUrl = host + "/reviewPart";
+const localUrl = getProxy() + "/reviewPart";
 const reviewServer = {
   updateReviewInfo: function updateReviewCount(data) {
     const url = localUrl + "/updateReviewInfo";
