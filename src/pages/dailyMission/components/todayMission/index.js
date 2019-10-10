@@ -61,7 +61,7 @@ function Item(props) {
     }
   }
 
-  const timer = useTimer(status, Number(continueSecond) - Number(startTime));
+  const timer = useTimer(status, Number(continueSecond));
   function renderTimer() {
     if (isStart) {
       return (

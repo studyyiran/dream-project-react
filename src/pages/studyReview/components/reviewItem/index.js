@@ -14,10 +14,11 @@ export default function ReviewItem(props) {
     totalReviewNeedTime,
     startTime,
     continueSecond,
+    lastingTime,
     createTime,
     status
   } = info;
-  const timer = useTimer(status, Number(continueSecond) - Number(startTime));
+  const timer = useTimer(status, Number(continueSecond));
   const deadLineDate = moment(Number(createTime)).add(totalReviewNeedTime, "d");
   const isStart = status === "start";
   function startReviewHandler() {
@@ -48,24 +49,20 @@ export default function ReviewItem(props) {
     }
   }
   function renderTimer() {
-    if (isStart) {
-      const arr = ["天", "时", "分", "秒"];
-      let timeString = "持续复习：";
-      (timer || []).forEach((item, index) => {
-        if (index !== 0) {
-          if (index === 1) {
-            item += 24 * timer[0];
-          }
-          timeString = timeString + `${item}`;
-          if (index !== arr.length - 1) {
-            timeString = timeString + ":";
-          }
+    const arr = ["天", "时", "分", "秒"];
+    let timeString = "持续复习：";
+    (timer || []).forEach((item, index) => {
+      if (index !== 0) {
+        if (index === 1) {
+          item += 24 * timer[0];
         }
-      });
-      return timeString;
-    } else {
-      return null;
-    }
+        timeString = timeString + `${item}`;
+        if (index !== arr.length - 1) {
+          timeString = timeString + ":";
+        }
+      }
+    });
+    return timeString;
   }
 
   function renderDeadLineTime() {
@@ -91,7 +88,7 @@ export default function ReviewItem(props) {
         <span>{moment(Number(createTime)).format("MM-DD HH:mm:ss")}</span>
         <p>{reviewContent}</p>
         <span>{renderDeadLineTime()}</span>
-        <span>{renderTimer()}</span>
+        {isStart ? <span>{renderTimer()}</span> : null}
       </div>
     </CloseAndSureContainer>
   );

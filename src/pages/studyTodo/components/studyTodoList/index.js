@@ -69,7 +69,8 @@ function Item(props) {
       hideStudyItem(_id);
     }
   }
-  const timer = useTimer(status, Number(lastingTime));
+  // 这块能否直接用continueSecond？
+  const timer = useTimer(status, Number(continueSecond));
   function renderTimer() {
     if (isStart) {
       return (
