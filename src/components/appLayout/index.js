@@ -37,6 +37,7 @@ export function AppLayout(props) {
   }, [timer2]);
   return (
     <div>
+      <TestTimer />
       <Layout />
       <RenderTimer timer={timer} />
       {props.children}
@@ -46,4 +47,16 @@ export function AppLayout(props) {
   // const timer = useCallback(() => {
   //   timerRun();
   // }, []);
+}
+
+function TestTimer() {
+  const [currentTime, setCurrentTime] = useState(0);
+  useEffect(() => {
+    window.setInterval(() => {
+      setCurrentTime(currentTime => {
+        return currentTime + 1;
+      });
+    }, 1000);
+  }, []);
+  return <span>{currentTime}</span>;
 }
