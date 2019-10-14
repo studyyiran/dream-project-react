@@ -40,8 +40,10 @@ export default function ReviewItem(props) {
           // 暂停
           props.hideReviewItem(_id);
         },
-        onCancel: () => {
-          props.fromReviewToStudyTodo(_id);
+        onCancel: type => {
+          if (type !== "mask") {
+            props.fromReviewToStudyTodo(_id);
+          }
         },
         okText: "确认删除",
         cancelText: "移到学习"

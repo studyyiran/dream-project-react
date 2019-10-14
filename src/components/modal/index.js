@@ -121,12 +121,12 @@ class Modal extends React.Component {
     }
   }
 
-  onClose() {
+  onClose(type) {
     // body init
     document.querySelector("body").setAttribute("style", this.bodyStyle);
     let { onCancel, destoryFunc } = this.props;
     if (onCancel) {
-      onCancel();
+      onCancel(type);
     }
     destoryFunc && destoryFunc();
   }
@@ -158,7 +158,9 @@ class Modal extends React.Component {
       <div
         ref={this.setModalScroll}
         style={maskStyle}
-        onClick={this.props.maskClosable ? this.onClose : null}
+        onClick={
+          this.props.maskClosable ? this.onClose.bind(this, "mask") : null
+        }
         className={`modal_mask ${centered ? "modal_pos_centered" : ""}`}
       >
         <div
